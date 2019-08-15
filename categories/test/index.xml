@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>test on raindust</title>
+    <link>http://raindust.github.io/categories/test/</link>
+    <description>Recent content in test on raindust</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 15 Aug 2019 23:50:13 +0800</lastBuildDate>
+    
+	<atom:link href="http://raindust.github.io/categories/test/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>博客的开篇词</title>
+      <link>http://raindust.github.io/post/2019/my-first-blog/</link>
+      <pubDate>Thu, 15 Aug 2019 23:50:13 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2019/my-first-blog/</guid>
+      <description>这是时隔很久的再次动笔，之前在新浪博客中断断续续更新博客坚持了八年，后面因为不想写而停止更新了。停止的原因之前很模糊，只是觉得渐渐讨厌自己写</description>
+    </item>
+    
+  </channel>
+</rss>
