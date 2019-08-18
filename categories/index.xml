@@ -6,10 +6,28 @@
     <description>Recent content in Categories on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 17 Aug 2019 10:22:12 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Aug 2019 22:13:08 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DPoS</title>
+      <link>http://raindust.github.io/categories/DPoS/</link>
+      <pubDate>Sun, 18 Aug 2019 22:13:08 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/categories/DPoS/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elastos</title>
+      <link>http://raindust.github.io/categories/elastos/</link>
+      <pubDate>Sun, 18 Aug 2019 22:13:08 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/categories/elastos/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Mac OS</title>

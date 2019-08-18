@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ELA on raindust</title>
+    <link>http://raindust.github.io/tags/ELA/</link>
+    <description>Recent content in ELA on raindust</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 18 Aug 2019 22:13:08 +0800</lastBuildDate>
+    
+	<atom:link href="http://raindust.github.io/tags/ELA/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ELA的DPoS收益分配</title>
+      <link>http://raindust.github.io/post/2019/elastos-dpos-reward/</link>
+      <pubDate>Sun, 18 Aug 2019 22:13:08 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2019/elastos-dpos-reward/</guid>
+      <description>收益发放时机 正常切换 当开启producer和CRC共同确认出块后一轮会有36个仲裁人（包含12个CRC超级节点和24个普通超级节点），每一轮</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,10 +6,37 @@
     <description>Recent content in Tags on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 17 Aug 2019 10:22:12 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Aug 2019 22:13:08 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DPoS</title>
+      <link>http://raindust.github.io/tags/DPoS/</link>
+      <pubDate>Sun, 18 Aug 2019 22:13:08 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/DPoS/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ELA</title>
+      <link>http://raindust.github.io/tags/ELA/</link>
+      <pubDate>Sun, 18 Aug 2019 22:13:08 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/ELA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elastos</title>
+      <link>http://raindust.github.io/tags/elastos/</link>
+      <pubDate>Sun, 18 Aug 2019 22:13:08 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/elastos/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Encryptions</title>

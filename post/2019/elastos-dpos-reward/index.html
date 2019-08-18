@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ELA的DPoS收益分配 - raindust</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Yan Mingzhi" /><meta name="description" content="收益发放时机 正常切换 当开启producer和CRC共同确认出块后一轮会有36个仲裁人（包含12个CRC超级节点和24个普通超级节点），每一轮" /><meta name="keywords" content="elastos, DPoS, ELA" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://raindust.github.io/post/2019/elastos-dpos-reward/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.6cc3126e.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/reset-even.css">
+
+
+<meta property="og:title" content="ELA的DPoS收益分配" />
+<meta property="og:description" content="收益发放时机 正常切换 当开启producer和CRC共同确认出块后一轮会有36个仲裁人（包含12个CRC超级节点和24个普通超级节点），每一轮" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://raindust.github.io/post/2019/elastos-dpos-reward/" />
+<meta property="article:published_time" content="2019-08-18T22:13:08&#43;08:00"/>
+<meta property="article:modified_time" content="2019-08-18T22:13:08&#43;08:00"/>
+
+<meta itemprop="name" content="ELA的DPoS收益分配">
+<meta itemprop="description" content="收益发放时机 正常切换 当开启producer和CRC共同确认出块后一轮会有36个仲裁人（包含12个CRC超级节点和24个普通超级节点），每一轮">
+
+
+<meta itemprop="datePublished" content="2019-08-18T22:13:08&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-18T22:13:08&#43;08:00" />
+<meta itemprop="wordCount" content="1739">
+
+
+
+<meta itemprop="keywords" content="elastos,DPoS,ELA," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ELA的DPoS收益分配"/>
+<meta name="twitter:description" content="收益发放时机 正常切换 当开启producer和CRC共同确认出块后一轮会有36个仲裁人（包含12个CRC超级节点和24个普通超级节点），每一轮"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">raindust</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">raindust</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+  
+  <header class="post-header">
+    <h1 class="post-title">ELA的DPoS收益分配</h1>
+
+    <div class="post-meta">
+      <span class="post-time"> 2019-08-18 </span>
+      <div class="post-category">
+        <a href="/categories/elastos/"> elastos </a>
+        <a href="/categories/DPoS/"> DPoS </a>
+        </div>
+      <span class="more-meta"> 1739 words </span>
+      <span class="more-meta"> 4 mins read </span>
+      <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+    </div>
+  </header>
+
+  <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#收益发放时机">收益发放时机</a>
+<ul>
+<li><a href="#正常切换">正常切换</a></li>
+<li><a href="#非正常切换">非正常切换</a></li>
+<li><a href="#退化切换">退化切换</a></li>
+</ul></li>
+<li><a href="#收益的计算">收益的计算</a>
+<ul>
+<li><a href="#收益的累计额">收益的累计额</a></li>
+<li><a href="#各超级节点的分配策略">各超级节点的分配策略</a>
+<ul>
+<li><a href="#当前仲裁人-不包括12个crc超级节点">当前仲裁人（不包括12个CRC超级节点）</a></li>
+<li><a href="#候选仲裁人">候选仲裁人</a></li>
+<li><a href="#crc超级节点">CRC超级节点</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#取整规则">取整规则</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+  <div class="post-content">
+    
+
+<h1 id="收益发放时机">收益发放时机</h1>
+
+<h2 id="正常切换">正常切换</h2>
+
+<p>当开启producer和CRC共同确认出块后一轮会有36个仲裁人（包含12个CRC超级节点和24个普通超级节点），每一轮的收益会在该轮结束受的第一个区块发放。
+例如第N轮从高度M开始，那么发放的高度为M+36。</p>
+
+<h2 id="非正常切换">非正常切换</h2>
+
+<p>非正常切换特指当前仲裁人中有1/3及以上（即36个仲裁人中的12个仲裁人及以上）在一轮提案中（当值仲裁人会发送提案，5秒内未收集足够赞成票则会超时变为下一个仲裁人当值并发送提案，以此类推当36个仲裁人每一个都当值并发送过提案则称为一轮提案）未参与共识导致区块无法成功最终确认时，会触发非正常切换，非正常切换会立即替换不超过1/3的普通超级节点。当发生非正常切换后，会在发生非正常切换所在的区块立即清算。
+例如第N轮从高度M开始，那么按正常切换的高度为M+36，假设在高度L（其中 M&lt;=L &lt; M+36）时发生非正常切换，则发放收益的高度为L。</p>
+
+<h2 id="退化切换">退化切换</h2>
+
+<p>退化指在正常切换或非正常切换过程中，有效的producer（有效指状态为active）数量不足24个时为了保证仍能够顺利共识，回到只有12个CRC超级节点参与区块确认的状态。如果共识过程中发生了退化（即一轮中只有12个CRC超级节点参与共识），收益发放则会在12个CRC超级节点组成的一轮结束后发放。收益将仅发放至CRC节点，所有普通DPOS节点都将没有DPOS收益。</p>
+
+<p>例如第N轮从高度M开始，则发放的高度为M+12。</p>
+
+<h1 id="收益的计算">收益的计算</h1>
+
+<h2 id="收益的累计额">收益的累计额</h2>
+
+<p>对DPoS的收益会在一轮内累计，直到该轮结束。假设一轮DPoS总共确认了n个区块，每一个区块的收益为Rx，则该轮总收益为</p>
+
+<p>$$\sum^{n}_{x}Rx\cdot0.35$$</p>
+
+<p>对于每一个区块，假设区块内有n个交易每一个交易的收益为Tx，总发行量（33000000ELA）为I，则区块收益Rx为：</p>
+
+<p>$$\frac{I\cdot0.04}{365\cdot24\cdot30}+\sum^{n}_{x}{Tx}$$</p>
+
+<p>可看出上述公式中将年度增发额平均到了每一个区块中，区块的平均出块速度为2分钟。</p>
+
+<h2 id="各超级节点的分配策略">各超级节点的分配策略</h2>
+
+<p>仲裁人的收益分为出块收益和投票收益两部分：</p>
+
+<ul>
+<li><p>出块收益占整个DPoS收益的25%。对于每一个成功确认的区块，出块收益由该轮所有仲裁人平分，这意味着候选仲裁人不会有该类收益。</p></li>
+
+<li><p>投票收益占整个DPoS收益的75%。分配方式为：在确定该轮仲裁人的区块数据状态时（假设当前高度为H，则正常切换确定该区块状态在高度为H-36*2-1的区块打包之后；非正常切换切换该区块状态在高度为H-1的区块打包之后）统计每个超级节点的投票数占总投票总数的百分比，将总的投票累计收益按上述比例分配。</p></li>
+</ul>
+
+<p>假设一轮的DPoS总收益（具体见“收益的累计额”小节）为D，确定该轮仲裁人时总投票数为S，每一个producer对应的投票数为Vx，以下分别阐述未发生退化时各超级节点的收益分配规则。</p>
+
+<h3 id="当前仲裁人-不包括12个crc超级节点">当前仲裁人（不包括12个CRC超级节点）</h3>
+
+<p>当前仲裁人的收益包括出块收益和投票收益，具体为：</p>
+
+<p>$$\frac{D\cdot0.25}{36}+(D\cdot0.75\cdot\frac{Vx}{S})$$</p>
+
+<h3 id="候选仲裁人">候选仲裁人</h3>
+
+<p>候选冲裁人的收益只包括投票收益，具体为：</p>
+
+<p>$$D\cdot0.75\cdot\frac{Vx}{S}$$</p>
+
+<h3 id="crc超级节点">CRC超级节点</h3>
+
+<p>目前阶段，12个CRC超级节点的收益会统一发放到一个地址，且由于CRC超级节点没有投票所以其收益只包括出块收益，具体为：</p>
+
+<p>$$\frac{D*0.25}{36}\cdot12$$</p>
+
+<p>当发生退化后，由于只有CRC超级节点参与共识，所以上述当前仲裁人和候选仲裁人不会有收益，CRC超级节点的总收益为D。</p>
+
+<h1 id="取整规则">取整规则</h1>
+
+<p>鉴于SELA（1ELA = 100000000）不可分而在收益分配的过程中存在小数运算，因此需要在部分运算过程中进行取整。以下列出目前均衡各个角色的取整规则：</p>
+
+<ol>
+<li>累计DPoS收益额时，每一个区块的DPoS收益向上取整（计算公式参见“累计的收益额”小节，注意向上取整后矿工可能会存在取整损失）</li>
+<li>25%的区块收益在DPoS收益总额中向上取整，但均分区块收益时向下取整（这里向下取整是为了避免DPoS收益不够分）</li>
+<li>投票收益为DPoS收益总额减去区块收益的余数，为每一个producer发放投票收益时向下取整（这里向下取整是为了避免DPoS收益不够分）</li>
+<li>该轮收益因不能整除而剩余的部分（理论最大值为108SELA）作为发放收益区块中矿工的奖励</li>
+</ol>
+
+<hr />
+
+<p>该文档为之前之前回答社区关于DPoS收益分配规则时整理，在几位同事校对和修改建议下最终完成，在此对他们表示衷心的感谢。我在接下来更新博客中会对一些大家常见的问题进行整理，旨在对Elastos<a href="https://www.elastos.org/downloads/elastos_whitepaper_zh.pdf">白皮书</a>及<a href="https://www.cyberrepublic.org/">社区</a>文档的补充，有什么建议和意见也希望大家能够反馈给我。</p>
+
+  </div>
+
+  <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Yan Mingzhi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-08-18
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/raindust/blog-source/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/Wechat.jpeg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/alipay.jpeg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+    <div class="post-tags">
+      <a href="/tags/elastos/">elastos</a>
+      <a href="/tags/DPoS/">DPoS</a>
+      <a href="/tags/ELA/">ELA</a>
+      </div>
+    <nav class="post-nav">
+      
+      <a class="next" href="/post/2019/mac-password-storage/">
+        <span class="next-text nav-default">我的免费密码管理方案</span>
+        <span class="next-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav>
+  </footer><script src="https://utteranc.es/client.js" repo="raindust/blog-source" issue-term="pathname" label="Comment"
+    theme="github-light" crossorigin="anonymous" async>
+    </script>
+  <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+      utterance.</a></noscript>
+</article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:realraindust@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://github.com/raindust" class="iconfont icon-github" title="github"></a>
+  <a href="http://raindust.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Yan Mingzhi</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
