@@ -6,10 +6,19 @@
     <description>Recent content in Posts on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 15 Aug 2019 23:50:13 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 17 Aug 2019 10:22:12 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>我的免费密码管理方案</title>
+      <link>http://raindust.github.io/post/2019/mac-password-storage/</link>
+      <pubDate>Sat, 17 Aug 2019 10:22:12 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2019/mac-password-storage/</guid>
+      <description>密码相信大家一定不会陌生，访问各种网站、很多手机App都需要密码，那么大家是怎么设置密码的呢？这样存储是否存在安全隐患呢？接下来我简单分析一</description>
+    </item>
     
     <item>
       <title>博客的开篇词</title>

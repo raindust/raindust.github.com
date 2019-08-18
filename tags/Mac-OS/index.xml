@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>raindust</title>
-    <link>http://raindust.github.io/</link>
-    <description>Recent content on raindust</description>
+    <title>Mac OS on raindust</title>
+    <link>http://raindust.github.io/tags/Mac-OS/</link>
+    <description>Recent content in Mac OS on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 17 Aug 2019 10:22:12 +0800</lastBuildDate>
     
-	<atom:link href="http://raindust.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://raindust.github.io/tags/Mac-OS/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>http://raindust.github.io/post/2019/mac-password-storage/</guid>
       <description>密码相信大家一定不会陌生，访问各种网站、很多手机App都需要密码，那么大家是怎么设置密码的呢？这样存储是否存在安全隐患呢？接下来我简单分析一</description>
-    </item>
-    
-    <item>
-      <title>博客的开篇词</title>
-      <link>http://raindust.github.io/post/2019/my-first-blog/</link>
-      <pubDate>Thu, 15 Aug 2019 23:50:13 +0800</pubDate>
-      
-      <guid>http://raindust.github.io/post/2019/my-first-blog/</guid>
-      <description>这是时隔很久的再次动笔，之前在新浪博客中断断续续更新博客坚持了八年，后面因为不想写而停止更新了。停止的原因之前很模糊，只是觉得渐渐讨厌自己写</description>
     </item>
     
   </channel>
