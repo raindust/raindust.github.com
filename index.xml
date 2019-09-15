@@ -6,10 +6,19 @@
     <description>Recent content on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 18 Aug 2019 22:13:08 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 14 Sep 2019 15:14:42 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>&#34;不务正业&#34;的编辑学习</title>
+      <link>http://raindust.github.io/post/2019/editor-training/</link>
+      <pubDate>Sat, 14 Sep 2019 15:14:42 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2019/editor-training/</guid>
+      <description>在中秋回家的路上买了极客时间的编辑训练营课程，不过购买的理由倒是不太正经：一来已处于下班后的脑抽状态，想随便找点不太烧脑的音频课程听听；二来</description>
+    </item>
     
     <item>
       <title>ELA的DPoS收益分配</title>
