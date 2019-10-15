@@ -6,10 +6,19 @@
     <description>Recent content on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 14 Sep 2019 15:14:42 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 15 Oct 2019 23:33:29 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>我的管理学启蒙</title>
+      <link>http://raindust.github.io/post/2019/my-management-enlightenment/</link>
+      <pubDate>Tue, 15 Oct 2019 23:33:29 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2019/my-management-enlightenment/</guid>
+      <description>算起来自己从开始做小组长带人算起已经前前后后有八年的时间做技术管理了，期间自己摸爬滚打也零零散散地积攒了一些心得，但没有系统地梳理过。曾经一</description>
+    </item>
     
     <item>
       <title>&#34;不务正业&#34;的编辑学习</title>
