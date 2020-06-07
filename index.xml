@@ -6,10 +6,19 @@
     <description>Recent content on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 31 May 2020 22:57:12 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2020 23:12:23 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>程序员容易陷入细节的思维习惯</title>
+      <link>http://raindust.github.io/post/2020/coders-details-trap/</link>
+      <pubDate>Sun, 07 Jun 2020 23:12:23 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2020/coders-details-trap/</guid>
+      <description>作为程序员看家的本领自然是写代码，我们大多都憧憬过在命令行中运指如飞黑进五角大楼或者写个“黄金一百行“代码解决系统顽疾的场景。不过因为眼中只</description>
+    </item>
     
     <item>
       <title>我的三个坏习惯</title>

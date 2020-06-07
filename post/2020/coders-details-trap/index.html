@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>程序员容易陷入细节的思维习惯 - raindust</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Yan Mingzhi" /><meta name="description" content="作为程序员看家的本领自然是写代码，我们大多都憧憬过在命令行中运指如飞黑进五角大楼或者写个“黄金一百行“代码解决系统顽疾的场景。不过因为眼中只" /><meta name="keywords" content="habits" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="http://raindust.github.io/post/2020/coders-details-trap/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/reset-even.css">
+
+
+<meta property="og:title" content="程序员容易陷入细节的思维习惯" />
+<meta property="og:description" content="作为程序员看家的本领自然是写代码，我们大多都憧憬过在命令行中运指如飞黑进五角大楼或者写个“黄金一百行“代码解决系统顽疾的场景。不过因为眼中只" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/coders-details-trap/" />
+<meta property="article:published_time" content="2020-06-07T23:12:23+08:00" />
+<meta property="article:modified_time" content="2020-06-07T23:12:23+08:00" />
+<meta itemprop="name" content="程序员容易陷入细节的思维习惯">
+<meta itemprop="description" content="作为程序员看家的本领自然是写代码，我们大多都憧憬过在命令行中运指如飞黑进五角大楼或者写个“黄金一百行“代码解决系统顽疾的场景。不过因为眼中只">
+<meta itemprop="datePublished" content="2020-06-07T23:12:23&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-07T23:12:23&#43;08:00" />
+<meta itemprop="wordCount" content="3382">
+
+
+
+<meta itemprop="keywords" content="habits," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="程序员容易陷入细节的思维习惯"/>
+<meta name="twitter:description" content="作为程序员看家的本领自然是写代码，我们大多都憧憬过在命令行中运指如飞黑进五角大楼或者写个“黄金一百行“代码解决系统顽疾的场景。不过因为眼中只"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">raindust</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">raindust</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">程序员容易陷入细节的思维习惯</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-06-07 </span>
+        <div class="post-category">
+            <a href="/categories/habits/"> habits </a>
+            </div>
+          <span class="more-meta"> 3382 words </span>
+          <span class="more-meta"> 7 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#第一手情报很重要">第一手情报很重要</a></li>
+    <li><a href="#不从main函数开始看我心里就不舒服">不从main函数开始看我心里就不舒服</a></li>
+    <li><a href="#看得懂代码了才算真正的高手">看得懂代码了才算真正的高手</a></li>
+    <li><a href="#写文档是没有意义的事">写文档是没有意义的事</a></li>
+    <li><a href="#写在最后">写在最后</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>作为程序员看家的本领自然是写代码，我们大多都憧憬过在命令行中运指如飞黑进五角大楼或者写个“黄金一百行“代码解决系统顽疾的场景。不过因为眼中只是代码，不少时候我们很容易陷入细节中无法自拔，下面列出一些我”踩过的坑“和大家分享：</p>
+<h2 id="第一手情报很重要">第一手情报很重要</h2>
+<p>相信你也一定这样听别人说过：“要掌握第一手情报”、“不要吃别人嚼剩下的”、“要深入到情报源头去”……之所以会这样说，是因为如果不是亲自获取第一手情报并进行分析，就有可能会在情报传递过程中被扭曲、误解。
+第一手情报固然重要，但我们真的需要凡事都去源头一探究竟吗？我觉得要看情况。举个例子说吧，你对量子力学不了解的话，亲自看到量子纠缠的实验结果和找一篇科普文章告诉你这个实验的原理和意义哪个对你来说意义更大呢？
+回到咱们的老本行来举例：</p>
+<ul>
+<li>与其下载编译chromium源码，不如先去看看别人写的关于chromium的技术文章</li>
+<li>与其直接研究kafka的源码，不如先去网上搜索一下消息队列的基本原理</li>
+<li>与其去研究riskv指令集，不如先去学习一下计算机组成原理的知识</li>
+<li>……
+（注意上面这些例子我没有绝对地肯定一方、否定另一方，我只是在说意义和价值的问题。）
+总结起来，看情况的原因如下：
+首先，每个人都有自己的专长领域，但还有很多领域都是我们所不擅长的，不擅长的部分我们与其自己去分析和处理情报，去听取这个领域专家的意见会更划算更靠谱一些。相信不是气象学专家的大家不会根据风的流向还有天空的云层等判断明天的天气情况吧，我们最普遍的做法是打开手机看一下天气预报，就是这个道理。
+其次，我们的时间和精力是有限的，在分配这些有限的资源时我们要视重要程度给予相应的比重。如果我们是前端工程师，Node.js方面的疑惑我们可能会去官方文档去仔细查阅，而嵌入式方面的知识我们问问熟人就了事了。甚至有些情报的真假对我们来说都无所谓：有人告诉你明天要下雨，即便是假的造成的影响也只是书包里多了一把伞的重量。
+最后，由于知识断层的存在，我们在理解事物时需要循序渐进，不同阶段接触相应层次的解释会让我们更容易和已知的知识建立连接。举例来说，一个古代人穿越来现在怎么让他理解编程呢？首先让他觉得电脑就是一个神奇的盒子，用鼠标和键盘这样的“道具”下命令，就会变“魔法”显示出你的“愿望”。等到他熟悉了电脑的使用，并且理解了电器的基本原理之后，再拆开电脑给他看看这个盒子里有什么东西，解释一下CPU、主板、内存、显示器等分别是用来做什么的。最后，再实际写一段简答的代码，过一下从代码到电脑程序的生成流程，最后解释下这个程序运行过程中电脑中的元件是怎么相互协作的。
+很多人对现在流行的“快餐文化”很抵触，潜意识觉得快餐文化就是一个贬义词，但在信息爆炸的今天如果我们要求所有的信息都要原汁原味，通过自己的处理加工而不接受他人的成品，即便是一天24小时不休息也处理不过来。我倒是觉得像“速成班”、“精简版”、“拆书”这些方式也不是没有价值，把自己不太关注的方面化简而只专注在少数领域，这反而能有效提升我们的竞争力。只不过不能所有方面都化简，那样就人浮于事了。</li>
+</ul>
+<h2 id="不从main函数开始看我心里就不舒服">不从main函数开始看我心里就不舒服</h2>
+<p>我从刚开始学习编程语言的时候就习惯于从main函数开始，以至于有很长一段时间，哪怕是大型系统的源码，我刚开始都想要看一眼main函数。
+当然看main函数是有好处的。有一些系统的main函数按模块安排初始化顺序（也许是为了照顾像我这种有强迫症的人吧），这对模块之间的依赖关系理解会有帮助。但不是这样组织的情况也很有很多，所以与其花时间找main函数，还是看一下代码相关的文档、浏览一下组织结构收益更大一些。
+也许你会说找到main函数之后我可以打断点逐步调试呀。代码量少的时候这样确实是了解代码的一种方式，不过大多数情况下还是在需要关注的代码处打断点，然后通过调用堆栈来梳理运行顺序更高效一些。
+找main函数是因为我们有一种追根溯源的情节，可main函数真的是“最开始的地方了吗”？main函数一般是编程语言给我们留下的编程语言入口，这和模块入口、类入口（构造函数）、方法入口（声明）没什么区别，关键在于你目前关注的是哪一个级别的数据流向关系。那么我们什么时候需要去看main函数呢？了解程序级数据流向，即想要了解调用程序调用参数的时候。</p>
+<h2 id="看得懂代码了才算真正的高手">看得懂代码了才算真正的高手</h2>
+<p>我之前有这样一个坏习惯，不管什么源码都喜欢下载下来用趁手的IDE打开然后一定要编译一下，编译成功运行一下就会很有成就感，似乎整个代码竟在自己掌握之中了。然后像一个衣锦还乡的大官人似的看着一行行的代码，顿时有了已经学习结束的错觉，就这样不知不觉变成了“编译高手”阅读代码能力却没怎么长进……
+之前总是会下意识觉得，学习一个源码库就一定需要先从代码入手，跳过了阅读官方文档的过程，这样一下钻到细节中去很容易迷失自我；或者捡了芝麻而高兴地宣布成功掌握了某项技术，哪知道我们已经成功地被这一点小成果遮蔽了眼睛。
+甚至有些时候只看官方文档也有局限性，这是由于源码的作者有意或者无意地忽略了一些细节或者夸大了某些特性，有时作者本身视野的局限性也会让文档不能很好地反应真实情况。因此我们需要借助搜索引擎来查找相关的说明性资料，或者去社区看看大家的观点。不错最好还是先查阅“历史”，了解技术出现的前因后果，了解还有什么主流的竞品，和竞品一起比较各自的特点擅长解决什么问题。
+其实用经典的3W理论很适合源码的学习。
+首先是What：即这个库是什么，主要解决什么问题？通过了解相关知识点，建立起关于这个领域的概念模型。
+其次是Why：即为什么要解决这些问题，该问题域有什么样的演化过程？通过了解基本原理结合第一步搭建起该问题域的基础框架。
+最后才是How：这些问题是怎么解决的？带着具体的问题有目的性地去阅读源码，不仅事半功倍而且有助于提高我们学习的自信心，因为这一个个的问题就是我们学习中的小目标，谁不喜欢完成目标的成就感呢？</p>
+<h2 id="写文档是没有意义的事">写文档是没有意义的事</h2>
+<p>写文档对我来说大多是很痛苦的，大多数时候我都能够靠“激情”写代码，可文档都是临近dead line了才会“草草了事”，而且这些完成的文档只是项目要求的最低标准。对我来说写文档比写代码难，如果有人愿意用写一行文档的工作量来换我写十行代码，我也会不假思索的同意吧。
+我们很容易陷入“文档写不好没关系，只要我的编码水平高就行”这样的思维陷阱，因此会从心底轻视文档，如果再以“代码即文档”作为终极借口，就可以对任何文档嗤之以鼻。
+正如我在<a href="http://raindust.xyz/post/2020/my-three-bad-habits/#%E7%BC%BA%E4%B9%8F%E6%81%92%E5%BF%83">我的三个坏习惯</a>中所说，我们成长的过程都是痛苦的，那么感觉轻松的编码过程和痛苦的写文档过程哪个更会让我们进步呢？
+编程之所以轻松，是因为对长期编程的我们而言，写代码是轻车熟路，说得再直白一些很多东西都是重复劳动。也许你会说，我的写的代码没有一行是重复之前的工作，怎么能说是重复劳动呢？这里的重复劳动是更深层面的，当我们遇到一个新问题，分析并找到问题的解决方法这个过程会是一个新的尝试，但当你将解决方法以编程语言表达时，大多是从脑中构思到计算机语言的翻译过程，虽然这次翻译的是不同内容，那就翻译本身对我们来说赞不是难事。
+那么写文档为什么困难呢？我觉得需要分两个层面来分析：第一个层面是，如果我们对解决问题的思路本身含糊不清，只是靠运气或者抄其他地方的实现恰巧解决了这个问题，那么写文档的过程对我们来说就是要思考解决问题的方法了；第二个层面是，写文档的过程并非将脑中的构思到自然语言的再一次翻译，而是要求我们需要提炼以更高的思维角度去看问题。
+不过看起来无论哪个层面对我们来说都很有帮助，何不换个心态积极地面对写文档这件事呢？不过第一个层面的文档还是建议在敲代码之前就写，一方面有助于清晰我们的思路，另一方面写个文档说不定别人都可以替我们实现了（我们都很懒的，何乐而不为呢）。第二层面的文档放在最后写，可以对设计与事先中的偏差做一些修正，复盘之后再提炼也会更符合实际（还没实现就开始提炼有一种在建空中楼阁的感觉）。</p>
+<h2 id="写在最后">写在最后</h2>
+<p>上文中都是按”不要陷入细节太深，还需要多抬头看看“的角度来写的，但这并不意味着细节不重要。有一句行话叫做”细节是魔鬼“，如果只是浮于表面而不去追究细节，则会滑向另一个极端。没错，正如我们进行软件架构时会经常用到trade-off一样，在处理抽象与细节的关系我们也需要trade-off。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Yan Mingzhi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-06-07
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/raindust/blog-source/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/Wechat.jpeg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/alipay.jpeg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/habits/">habits</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020/my-three-bad-habits/">
+            <span class="next-text nav-default">我的三个坏习惯</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><script src="https://utteranc.es/client.js" repo="raindust/blog-source" issue-term="pathname" label="Comment"
+            theme="github-light" crossorigin="anonymous" async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+      utterance.</a></noscript>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:realraindust@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://github.com/raindust" class="iconfont icon-github" title="github"></a>
+  <a href="http://raindust.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Yan Mingzhi</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
