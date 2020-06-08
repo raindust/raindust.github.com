@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xuper on raindust</title>
+    <link>http://raindust.github.io/tags/xuper/</link>
+    <description>Recent content in xuper on raindust</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 08 Jun 2020 20:12:41 +0800</lastBuildDate>
+    
+	<atom:link href="http://raindust.github.io/tags/xuper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>XuperChain从节点部署到合约调用完整向导</title>
+      <link>http://raindust.github.io/post/2020/xchain-contract-deployment-tutorial/</link>
+      <pubDate>Mon, 08 Jun 2020 20:12:41 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2020/xchain-contract-deployment-tutorial/</guid>
+      <description>XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh</description>
+    </item>
+    
+  </channel>
+</rss>

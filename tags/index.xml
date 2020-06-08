@@ -6,10 +6,37 @@
     <description>Recent content in Tags on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Jun 2020 23:12:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2020 20:12:41 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>blockchain</title>
+      <link>http://raindust.github.io/tags/blockchain/</link>
+      <pubDate>Mon, 08 Jun 2020 20:12:41 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/blockchain/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>xuper</title>
+      <link>http://raindust.github.io/tags/xuper/</link>
+      <pubDate>Mon, 08 Jun 2020 20:12:41 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/xuper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>solidity</title>
+      <link>http://raindust.github.io/tags/solidity/</link>
+      <pubDate>Mon, 08 Jun 2020 19:51:57 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/solidity/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>habits</title>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>XuperChain从节点部署到合约调用完整向导 - raindust</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Yan Mingzhi" /><meta name="description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh" /><meta name="keywords" content="blockchain, xuper" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="http://raindust.github.io/post/2020/xchain-contract-deployment-tutorial/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/reset-even.css">
+
+
+<meta property="og:title" content="XuperChain从节点部署到合约调用完整向导" />
+<meta property="og:description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/xchain-contract-deployment-tutorial/" />
+<meta property="article:published_time" content="2020-06-08T20:12:41+08:00" />
+<meta property="article:modified_time" content="2020-06-08T20:12:41+08:00" />
+<meta itemprop="name" content="XuperChain从节点部署到合约调用完整向导">
+<meta itemprop="description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh">
+<meta itemprop="datePublished" content="2020-06-08T20:12:41&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-08T20:12:41&#43;08:00" />
+<meta itemprop="wordCount" content="1309">
+
+
+
+<meta itemprop="keywords" content="blockchain,xuper," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="XuperChain从节点部署到合约调用完整向导"/>
+<meta name="twitter:description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">raindust</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">raindust</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">XuperChain从节点部署到合约调用完整向导</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-06-08 </span>
+        <div class="post-category">
+            <a href="/categories/blockchain/"> blockchain </a>
+            </div>
+          <span class="more-meta"> 1309 words </span>
+          <span class="more-meta"> 3 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#启动链">启动链</a></li>
+        <li><a href="#准备合约账户">准备合约账户</a></li>
+        <li><a href="#编译合约">编译合约</a></li>
+        <li><a href="#部署合约">部署合约</a></li>
+        <li><a href="#调用合约">调用合约</a></li>
+        <li><a href="#参考链接">参考链接</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperChain的合约部署调用操作，这里提供一个完整的向导供大家参考。</p>
+<p>这里假设你已经下载<a href="https://github.com/xuperchain/xuperchain">源码</a>，并且成功编译（执行make即可，这里不再做额外说明），进入到可执行文件xchain及xchain-cli所在目录下：</p>
+<h3 id="启动链">启动链</h3>
+<ol>
+<li>
+<p>初始化链上配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli createChain
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>启动链</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">nohup ./xchain <span class="p">&amp;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>成功启动后可以通过以下命令查看链上状态：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli status
+</code></pre></td></tr></table>
+</div>
+</div><p>可在json类型的返回值中找到键为<code>height</code>，其值为当前链高</p>
+</li>
+</ol>
+<h3 id="准备合约账户">准备合约账户</h3>
+<ol>
+<li>
+<p>调用cli命令创建一个合约账户：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli account new --account <span class="m">1111111111111111</span> --fee <span class="m">1000</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里指定账户名为<code>1111111111111111</code>，创建成功后相应的合约地址为<code>XC1111111111111111@xuper</code>，其中<code>xuper</code>为默认启动链时默认分配的链名称</p>
+</li>
+<li>
+<p>通过如下命令查询并验证新生成的合约账户ACL相关信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">xchain-cli acl query --account XC1111111111111111@xuper
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>准备符合权限的地址列表</p>
+<p>首先在<code>data</code>目录下创建子目录<code>acl</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">mkdir data/acl
+</code></pre></td></tr></table>
+</div>
+</div><p>调用如下命令生成地址列表文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="s2">&#34;XC1111111111111111@xuper/dpzuVdosQrF2kmzumhVeFQZa1aYcdgFpN&#34;</span> &gt; data/acl/addrs
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>向新生成的合约账户中转账</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli transfer --to XC1111111111111111@xuper --amount <span class="m">100000000</span> --keys data/keys/
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>成功转账后可以查询合约账户中的余额</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">./xchain-cli account balance XC1111111111111111@xuper
+</code></pre></td></tr></table>
+</div>
+</div><p>这里会返回余额和步骤2中指定的<code>amount</code>相同</p>
+</li>
+</ol>
+<h3 id="编译合约">编译合约</h3>
+<ol>
+<li>
+<p>进入到合约代码所在位置，运行如下命令对go语言源码进行wasm合约编译：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GOOS</span><span class="o">=</span>js <span class="nv">GOARCH</span><span class="o">=</span>wasm go build counter.go
+</code></pre></td></tr></table>
+</div>
+</div><p>如果编译成功会生成一个名为counter的可执行文件</p>
+</li>
+<li>
+<p>将可执行拷贝到xchain程序目录下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">cp counter <span class="o">[</span>your path<span class="o">]</span>/data/blockchain/xuper/wasm/
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="部署合约">部署合约</h3>
+<ol>
+<li>
+<p>通过如下命令进行试生成合约原始交易</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm deploy --account XC1111111111111111@xuper --cname counter -m -a <span class="s1">&#39;{&#34;creator&#34;: &#34;xchain&#34;}&#39;</span> -A data/acl/addrs -o tx.output
+ --keys data/keys --name xuper --runtime go data/blockchain/xuper/wasm/counter
+</code></pre></td></tr></table>
+</div>
+</div><p>如果试生成成功会返回如下响应消息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">contract response:
+The gas you cousume is: <span class="m">5182110</span>
+You need add fee
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>添加步骤1中的返回fee值后重复步骤1中的命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm deploy --account XC1111111111111111@xuper --cname counter -m -a <span class="s1">&#39;{&#34;creator&#34;: &#34;xchain&#34;}&#39;</span> -A data/acl/addrs -o tx.output
+ --keys data/keys --name xuper --runtime go data/blockchain/xuper/wasm/counter --fee <span class="m">5182110</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>若成功在相同目录下生成名为<code>tx.output</code>的文件</p>
+</li>
+<li>
+<p>对步骤2中生成的原始交易签名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig sign --tx tx.output --output sign.out --keys data/keys/
+</code></pre></td></tr></table>
+</div>
+</div><p>签名成功后在相同目录下生成对原始交易的签名文件<code>sign.out</code></p>
+</li>
+<li>
+<p>将原始交易及签名发送到链上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig send --tx tx.output sign.out sign.out
+</code></pre></td></tr></table>
+</div>
+</div><p>发送成功后会返回交易的Hash值</p>
+</li>
+<li>
+<p>查询合约账户验证部署结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli account contracts --account XC1111111111111111@xuper
+</code></pre></td></tr></table>
+</div>
+</div><p>返回结果中包含刚才生成原始交易时指定的合约名则说明部署成功</p>
+</li>
+</ol>
+<h3 id="调用合约">调用合约</h3>
+<ol>
+<li>
+<p>通过如下命令试生成合约调用的原始交易</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out
+</code></pre></td></tr></table>
+</div>
+</div><p>如果试生成成功，则会返回如下响应消息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">contract response: 1
+The gas you cousume is: 100662
+You need add fee
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>添加步骤1中的返回fee值后重复步骤1中的命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out --fee <span class="m">100662</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>若生成成功则会在相同目录下生成名为<code>increase.out</code>的文件</p>
+</li>
+<li>
+<p>对步骤2中生成的原始交易签名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig sign --tx increase.out --output increase.sign --keys data/keys/
+</code></pre></td></tr></table>
+</div>
+</div><p>签名成功后在相同目录下生成对原始交易的签名文件<code>increase.sign</code></p>
+</li>
+<li>
+<p>将原始交易及签名发送到链上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig send --tx increase.out increase.sign increase.sign
+</code></pre></td></tr></table>
+</div>
+</div><p>发送成功后会返回交易的Hash值</p>
+</li>
+<li>
+<p>测试调用合约结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out
+</code></pre></td></tr></table>
+</div>
+</div><p>如上述命令所示，我们可以再次调用increase方法，通过合约试运行中返回结果查看存储于链上key为<code>counter</code>对应的值变化情况。由于我们已经成功新增过一次计数，这里的返回值应该是<code>2</code>，以下为测试中返回的结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">contract response: <span class="m">2</span>
+The gas you cousume is: <span class="m">100834</span>
+You need add fee
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="参考链接">参考链接</h3>
+<ol>
+<li><a href="https://xuperchain.readthedocs.io/zh/latest/quickstart.html#basic-operation">XuperChain环境部署</a></li>
+<li><a href="https://xuperchain.readthedocs.io/zh/latest/advanced_usage/create_contracts.html">创建合约</a></li>
+<li><a href="https://xuperchain.readthedocs.io/zh/latest/test_network/guides.html#id11">超级链测试环境使用指南</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Yan Mingzhi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-06-08
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/raindust/blog-source/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/Wechat.jpeg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/alipay.jpeg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/blockchain/">blockchain</a>
+          <a href="/tags/xuper/">xuper</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020/solidity-ides/">
+            <span class="next-text nav-default">Solidity开发环境</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><script src="https://utteranc.es/client.js" repo="raindust/blog-source" issue-term="pathname" label="Comment"
+            theme="github-light" crossorigin="anonymous" async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+      utterance.</a></noscript>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:realraindust@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://github.com/raindust" class="iconfont icon-github" title="github"></a>
+  <a href="http://raindust.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Yan Mingzhi</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
