@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>rust包管理入门</title>
+      <title>rust包使用入门</title>
       <link>http://raindust.github.io/post/2020/introduce_to_rust_package/</link>
       <pubDate>Thu, 25 Jun 2020 13:21:13 +0800</pubDate>
       
       <guid>http://raindust.github.io/post/2020/introduce_to_rust_package/</guid>
-      <description>在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的</description>
+      <description>在开始学习rust的时候，相信不少人和我一样对rust中的包使用一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的</description>
     </item>
     
     <item>
