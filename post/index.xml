@@ -6,10 +6,19 @@
     <description>Recent content in Posts on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 08 Jun 2020 20:12:41 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2020 13:21:13 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>rust包管理入门</title>
+      <link>http://raindust.github.io/post/2020/introduce_to_rust_package/</link>
+      <pubDate>Thu, 25 Jun 2020 13:21:13 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2020/introduce_to_rust_package/</guid>
+      <description>在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的</description>
+    </item>
     
     <item>
       <title>XuperChain从节点部署到合约调用完整向导</title>

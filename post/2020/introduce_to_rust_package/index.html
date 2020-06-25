@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>rust包管理入门 - raindust</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Yan Mingzhi" /><meta name="description" content="在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的" /><meta name="keywords" content="rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="http://raindust.github.io/post/2020/introduce_to_rust_package/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/reset-even.css">
+
+
+<meta property="og:title" content="rust包管理入门" />
+<meta property="og:description" content="在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/introduce_to_rust_package/" />
+<meta property="article:published_time" content="2020-06-25T13:21:13+08:00" />
+<meta property="article:modified_time" content="2020-06-25T13:21:13+08:00" />
+<meta itemprop="name" content="rust包管理入门">
+<meta itemprop="description" content="在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的">
+<meta itemprop="datePublished" content="2020-06-25T13:21:13&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-25T13:21:13&#43;08:00" />
+<meta itemprop="wordCount" content="4276">
+
+
+
+<meta itemprop="keywords" content="rust," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="rust包管理入门"/>
+<meta name="twitter:description" content="在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">raindust</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">raindust</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">rust包管理入门</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-06-25 </span>
+        <div class="post-category">
+            <a href="/categories/rust/"> rust </a>
+            </div>
+          <span class="more-meta"> 4276 words </span>
+          <span class="more-meta"> 9 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概念">概念</a>
+      <ul>
+        <li><a href="#crate">crate</a></li>
+        <li><a href="#package">package</a></li>
+        <li><a href="#workspace">workspace</a></li>
+        <li><a href="#module">module</a></li>
+        <li><a href="#scope">scope</a></li>
+      </ul>
+    </li>
+    <li><a href="#导出操作">导出操作</a></li>
+    <li><a href="#导入操作">导入操作</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的概念在阻碍我们的认知。接下来我们先过一下这些概念，理清概念之间的关系，之后再通过对包的常用操作加深理解。</p>
+<h2 id="概念">概念</h2>
+<h3 id="crate">crate</h3>
+<p>我们理解新事物时一般会通过与已知事物建立连接，而编程过程中如果创造一些全新的概念会增加我们的心智负担，所以我们也会与日常事务关联来加深印象。常见的单词如bucket（桶）、slot（水槽）、library（图书馆）、repository（储藏室），都是我们编程中常见的单词，它们都代表某种形式的容器。</p>
+<p>那我们回过头来看看<code>crate</code>这个rust包管理中的概念，crate对应的英文单词有板条箱的含义。那么，板条箱是什么？一个典型的板条箱长这样：</p>
+<p><img src="/images/2020/introduce_to_rust_package/crate.jpg" alt="板条箱"></p>
+<p>可以看出来板条箱主要是用木条板做成的，板之间有缝隙通风性好可以装透气的物品，此外拆装方便因此在运输货物的时候也很有用，我之前让联邦快递运行李也用到了简易版的板条箱用来固定和保护诸如自行车、电脑这类易损物品。那么我们这里说的板条箱和rust中的象征意义是一回事吗？我觉得是的，不信你可以看看https://crates.io/上的图标。</p>
+<p>说完crate这个词，我们再看看<code>cargo</code>：cargo在英文中有轮船、飞机等大型交通工具装载的货物这个意思，而cargo在rust语言中作为包管理工具，负责管理一个个需要运输的crate（板条箱），成功地将它们运送到客户（rust开发者）手中。怎么样？理解了这两个单词的真正含义之后是不是觉得rust中的包管理不再那么陌生了？我们再到rust语言中对crate进一步接触吧。</p>
+<p>crate是rust包中的核心概念，在我们使用rust编程时会经常碰到，但是在不同的场景下意义有所不同，大体说来可以分为**作为包共享的基本单位（编译前的板条箱）<strong>和</strong>代表一个二进制生成单位（编译后的板条箱）**两种类型含义。
+我们先看看前者，在https://crates.io/中共享的一个包，以及rust文档中（可以通过cargo doc生成）的crate都可以看做是这个含义的典型代表。作为包共享的基本单位，一个crate源码中需要有对应的cargo.toml文件，用于描述包的基本信息、定义依赖项等。</p>
+<p>而后者主要体现在包依赖的路径上，对此我们在<a href="https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html#packages-and-crates">The Rust Programming Language一书对于crate的描述</a>也能看出一些端倪，书中提到了<strong>crate root</strong>的概念，表示一个作为编译入口的源文件。如果是lib库的话则对应包的src子目录下的lib.rc文件，而可执行的话则对应包的src子目录下的main.rc文件。我们在导入包时所用到的<code>crate</code>关键字其实也指的是这个crate root。</p>
+<p>好了，get到crate这个比较陌生的概念之后，我们再看看其他包相关的概念吧，这些概念我们都能从其他语言中看到所以会简单带过。</p>
+<h3 id="package">package</h3>
+<p>package在英文中有包的意思，我们在使用node的npm、python的pip、java的maven或者gradle、go语言的mod时操作的都是类似的概念，简单来说就是一个高内聚、可共享的基本单位。</p>
+<p>不过我们需要注意在rust中package和crate的区别，我们还是在看看<a href="https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html#packages-and-crates">The Rust Programming Language对此的描述</a>：一个package由一个或多个crate组成，用于提供一组功能。由此可以看到二者是包含关系，注意当一个package包含多个crate时，一般只会有一个lib库，但是会有多个可执行。其实我们看到package和<strong>作为包共享的基本单位</strong>的crate含义是等价的。</p>
+<h3 id="workspace">workspace</h3>
+<p>当工程逻辑比较复杂时，我们会希望拆分出多个package（可能会有多个用于提供功能的包，以及一个或多个用于编译可执行的包），这时候就需要workspace了。workspace在英文中有工作空间的意思，在不少软件中也都有workspace作为顶层的文件组织概念，比较好理解我们就不再赘述了。</p>
+<h3 id="module">module</h3>
+<p>module是模块的意思，这是我们最熟悉不过的单词了，在rust中通过<code>mod</code>关键词来表示。需要注意的是rust中的模块有两种定义方式：一种是显示地申明<code>mod A</code>；此外，当我们新建一个”*.rs”文件时，也会自动地以文件名生成一个mod，mod支持嵌套定义。</p>
+<p>熟悉C++、C#等语言的同学可能会发现这里的mod和namespace（命名空间）的概念很像，只是在rust中会根据源文件自动生成mod。</p>
+<h3 id="scope">scope</h3>
+<p>scope就是作用域了，有人可能会奇怪为什么在说包管理时会提到作用域，不过我觉得提到作用域能帮助我们更好地理解包依赖关系。其实module是在我们真正的代码逻辑之外的一层作用域，当导入（<code>use</code>）一个包或者类型的时候，实际上是将其他作用域中的元素导入到当前module所在的作用域。</p>
+<p>理解到这里对于下面这个最简单的例子也许你就不会奇怪了：为什么同一个文件中的单元测试还需要通过super来导入呢？因为我们定义了一个自作用域来包裹所有的测试函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">A</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="cp">#[cfg(test)]</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">tests</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w">  </span><span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>到这里我们今天的主角都介绍完了，让我们用一个简单的命令行连线图来示意一下他们的层级关系吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">  workspace1
+ └── package1
+ │   ├── libA
+ │   │   ├── mod<span class="o">(</span>crate root<span class="o">)</span>
+ │   │       ├── modA_1
+ │   │       │   ├── modA_1_tests
+ │   │       └── modA_2
+ │   └── binB
+ │   │   ├── mod<span class="o">(</span>crate root<span class="o">)</span>
+ │   └── binC
+ │       ├── mod<span class="o">(</span>crate root<span class="o">)</span>
+ │           ├── modC_1
+ │           ├── modC_2
+ └── package2
+     ├── libD
+         ├── mod<span class="o">(</span>crate root<span class="o">)</span>
+             ├── modD_1
+             └── modD_2
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="导出操作">导出操作</h2>
+<p>说到模块导出我们就需要说一下rust的可见性。其实rust的可见性规则很简单，总结下来只有一个规则：<strong>除了trait之外的其他作用域内部元素都是默认对外不可见的</strong>。有了这个原则之后，我们看看两种常见的module导出吧：</p>
+<p>第一种其实是在定义module之间的从属关系。比如我们要在一个crate中添加一个文件<code>a.rs</code>，若想让其被正常调用一般会在crate root文件（一般是lib.rs、main.rs）中通过<code>mod a;</code>的方式申明，这样实际上是在告诉编译器“module a”是从属于crate root的。从上面我们知道crate root的内部元素默认对外不可见，那我们如果想要让&quot;module a&quot;对包外可见，则可以在申明时加上访问修饰符pub：<code>pub mod a;</code>，这样外部就可以访问到&quot;module a&quot;了。</p>
+<p>这里有两点需要额外说明一下。其一是上面我们通过<code>pub mod a;</code>的申明方式只是让外部可以看到&quot;module a&rdquo;，对于该模块内部的元素也需要添加访问修饰符pub才可见。其二是我们上面只说了一个crate的顶层申明，我们知道在rust的包里也支持通过子目录来组织模块，子目录下的mod.rs文件对该目录内的其他文件组织方式，和我们上面提到的crate root文件组织方式是一样的，这里就不再做具体说明了。</p>
+<p>第二种导出方式需要用到use关键词。从上文对作用域的说明我们知道，通过use我们可以将其他作用域下的元素导入到当前作用域下。接着如果我们在use之前加上pub修饰符，就可以在其他作用域内访问该作用域use所导入的元素了。这么说可能有点绕，我们看一个实际的例子吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">mod</span> <span class="nn">aa</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">A</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">bb</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">aa</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="cp">#[test]</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">obj1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aa</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">obj2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ba</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到我们通过在&quot;module b&quot;中使用<code>pub use</code>的方式，让结构体A在该模块内也可见，然后就可以通过<code>b::A</code>的方式访问到结构体A。不过需要注意的是，<code>pub use</code>并不能改变结构体A的可访问性：如果我们将&quot;module a&quot;中对于结构体A的定义从<code>pub struct A;</code>更改为<code>struct A;</code>，rust编译器就会找你的麻烦。</p>
+<p>此外，我们可以通过<code>as</code>关键字改变导出的名称，比如下面我通过as修饰符将结构体A改名为B：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">mod</span> <span class="nn">aa</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">A</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">bb</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">aa</span>::<span class="n">A</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="cp">#[test]</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">obj1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aa</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">obj2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bb</span>::<span class="n">B</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="导入操作">导入操作</h2>
+<p>导出和导入操作并没有严格的界限，实际上当我们要导出一个元素时，必须先让该元素在该作用域下可见，而这实际上就是在导入。这里我们列一下导入操作中会用到的三个关键字：</p>
+<ul>
+<li><strong>use</strong>：前面我们已经多次提到了use，它会将其他作用域下的元素导入到当前作用域下</li>
+<li><strong>mod</strong>：之前也提到了过mod实际上是在定义模块的从属关系</li>
+<li><strong>extern</strong>：可以通过<code>extern crate [crateName];</code>的方式告诉Rust我们需要编译和链接一个外部的元素，不过在2018版本之后我们一般都<a href="https://doc.rust-lang.org/edition-guide/rust-2018/module-system/path-clarity.html">不需要再这样显示申明了</a>，目前我们一般通过和<code>#[macro_use]</code>特性结合来导入外部的宏</li>
+</ul>
+<p>由于模块之间的层次关系，我们导入时可能会有多层路径，为了方便表示在rust中支持绝对路径和相对路径两种方式，绝对路径会从crate root开始起算，而相对路径则是从当前作用域所在的模块开始。我们可以通过以下的路径前缀来找到我们想要的元素：</p>
+<ul>
+<li><strong>crate</strong>：绝对路径的表示方法，会从crate root所在的模块开始起算</li>
+<li><strong>self</strong>：相对路径的表示方法，指代当前作用域所在的模块</li>
+<li><strong>super</strong>：相对路径的表示方法，指代当前作用域所在模块的上一级模块</li>
+<li><strong>模块名</strong>：相对路径的表示方法，当我们可以在当前作用域直接访问到其他模块时，上面的self关键词可以省略</li>
+</ul>
+<p>接下来我们在一个包的lib.rs文件里写一个简单的例子加深理解，可以看到我们使用了四种方式访问到了结构体A：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">mod</span> <span class="nn">aa</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">mod</span> <span class="nn">aa_inner</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">A</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 通过super访问
+</span><span class="c1"></span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">aa</span>::<span class="n">aa_inner</span>::<span class="n">A</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">B</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="cp">#[test]</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 通过crate访问
+</span><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">obj1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">crate</span>::<span class="n">aa</span>::<span class="n">aa_inner</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 通过self访问
+</span><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">obj2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span>::<span class="n">aa</span>::<span class="n">aa_inner</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 直接通过模块名访问
+</span><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">obj3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aa</span>::<span class="n">aa_inner</span>::<span class="n">A</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>说完了前缀我们在看看“后缀”吧。后缀实际上是在限定导入的范围，以下是常用到的后缀：</p>
+<ul>
+<li><strong>模块名</strong>：将一个模块导入到当前作用域下，可以直接通过该模块名来访问其内部的公共元素</li>
+<li><strong>类型</strong>：直接讲一个类型导入到当前作用域下，这样就可以直接使用</li>
+<li><strong><code>*</code></strong>：会将一个模块下的所有元素都导入到当前作用域，导入后的元素也可以直接使用。注意这样可能会导入很多用不到的元素，这会导致我们编译后的文件膨胀所以要慎用</li>
+<li><strong>self</strong>：当导入表达式中存在多项时，可以通过self表示当前模块</li>
+</ul>
+<p>老规矩我们再看一个例子体会一下区别吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">mod</span> <span class="nn">aa</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">mod</span> <span class="nn">aa_inner</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">A1</span><span class="p">;</span><span class="w">
+</span><span class="w">        </span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">A2</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">A3</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">bb</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 导入模块名aa
+</span><span class="c1"></span><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">aa</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="cp">#[test]</span><span class="w">
+</span><span class="w">    </span><span class="k">fn</span> <span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aa</span>::<span class="n">aa_inner</span>::<span class="n">A1</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">cc</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 导入aa_inner子包下的A1
+</span><span class="c1"></span><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">aa</span>::<span class="n">aa_inner</span>::<span class="n">A1</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="cp">#[test]</span><span class="w">
+</span><span class="w">    </span><span class="k">fn</span> <span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A1</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">dd</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 导入aa_inner包下的所有公共元素：A1和A2
+</span><span class="c1"></span><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">aa</span>::<span class="n">aa_inner</span>::<span class="o">*</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="cp">#[test]</span><span class="w">
+</span><span class="w">    </span><span class="k">fn</span> <span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A1</span><span class="p">;</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">a2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A2</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">ee</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 导入aa包本身，以及aa_inner子包下的A1
+</span><span class="c1"></span><span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="n">aa</span>::<span class="p">{</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">aa_inner</span>::<span class="n">A1</span><span class="p">};</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="cp">#[test]</span><span class="w">
+</span><span class="w">    </span><span class="k">fn</span> <span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A1</span><span class="p">;</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">a3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aa</span>::<span class="n">A3</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>到这里关于rust包的说明告一段落，希望换一种思路说明能对大家能有所帮助。如果有什么疏漏和错误也希望大家能够留言给我，我们一起学习一起进步。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Yan Mingzhi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-06-25
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/raindust/blog-source/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/Wechat.jpeg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/alipay.jpeg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/rust/">rust</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020/xchain-contract-deployment-tutorial/">
+            <span class="next-text nav-default">XuperChain从节点部署到合约调用完整向导</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><script src="https://utteranc.es/client.js" repo="raindust/blog-source" issue-term="pathname" label="Comment"
+            theme="github-light" crossorigin="anonymous" async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+      utterance.</a></noscript>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:realraindust@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://github.com/raindust" class="iconfont icon-github" title="github"></a>
+  <a href="http://raindust.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Yan Mingzhi</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
