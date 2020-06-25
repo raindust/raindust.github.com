@@ -50,7 +50,7 @@
 <meta itemprop="description" content="在开始学习rust的时候，相信不少人和我一样对rust中的包管理一头雾水，rust包中存在一些陌生的概念，我觉得正是因为这些不同于其他语言的">
 <meta itemprop="datePublished" content="2020-06-25T13:21:13&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-25T13:21:13&#43;08:00" />
-<meta itemprop="wordCount" content="4276">
+<meta itemprop="wordCount" content="4257">
 
 
 
@@ -126,7 +126,7 @@
         <div class="post-category">
             <a href="/categories/rust/"> rust </a>
             </div>
-          <span class="more-meta"> 4276 words </span>
+          <span class="more-meta"> 4257 words </span>
           <span class="more-meta"> 9 mins read </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
       </div>
@@ -157,13 +157,13 @@
 <h2 id="概念">概念</h2>
 <h3 id="crate">crate</h3>
 <p>我们理解新事物时一般会通过与已知事物建立连接，而编程过程中如果创造一些全新的概念会增加我们的心智负担，所以我们也会与日常事务关联来加深印象。常见的单词如bucket（桶）、slot（水槽）、library（图书馆）、repository（储藏室），都是我们编程中常见的单词，它们都代表某种形式的容器。</p>
-<p>那我们回过头来看看<code>crate</code>这个rust包管理中的概念，crate对应的英文单词有板条箱的含义。那么，板条箱是什么？一个典型的板条箱长这样：</p>
+<p>我们回过头来看看<code>crate</code>这个rust包管理中的概念，crate对应的英文单词有板条箱的含义。那么，板条箱是什么呢？一个典型的板条箱长这样：</p>
 <p><img src="/images/2020/introduce_to_rust_package/crate.jpg" alt="板条箱"></p>
-<p>可以看出来板条箱主要是用木条板做成的，板之间有缝隙通风性好可以装透气的物品，此外拆装方便因此在运输货物的时候也很有用，我之前让联邦快递运行李也用到了简易版的板条箱用来固定和保护诸如自行车、电脑这类易损物品。那么我们这里说的板条箱和rust中的象征意义是一回事吗？我觉得是的，不信你可以看看https://crates.io/上的图标。</p>
+<p>可以看出来板条箱主要是用木条板做成的，板之间有缝隙通风性好可以装透气的物品，此外拆装方便因此在运输货物的时候也很有用，我之前让德邦物流帮忙运行李时也用到了简易版的板条箱用来固定和保护诸如自行车、电脑这类易损物品。那么我们这里说的板条箱和rust中的象征意义是一回事吗？我觉得是的，不信你可以看看<a href="https://crates.io/">crates官网</a>上的图标。</p>
 <p>说完crate这个词，我们再看看<code>cargo</code>：cargo在英文中有轮船、飞机等大型交通工具装载的货物这个意思，而cargo在rust语言中作为包管理工具，负责管理一个个需要运输的crate（板条箱），成功地将它们运送到客户（rust开发者）手中。怎么样？理解了这两个单词的真正含义之后是不是觉得rust中的包管理不再那么陌生了？我们再到rust语言中对crate进一步接触吧。</p>
-<p>crate是rust包中的核心概念，在我们使用rust编程时会经常碰到，但是在不同的场景下意义有所不同，大体说来可以分为**作为包共享的基本单位（编译前的板条箱）<strong>和</strong>代表一个二进制生成单位（编译后的板条箱）**两种类型含义。
-我们先看看前者，在https://crates.io/中共享的一个包，以及rust文档中（可以通过cargo doc生成）的crate都可以看做是这个含义的典型代表。作为包共享的基本单位，一个crate源码中需要有对应的cargo.toml文件，用于描述包的基本信息、定义依赖项等。</p>
-<p>而后者主要体现在包依赖的路径上，对此我们在<a href="https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html#packages-and-crates">The Rust Programming Language一书对于crate的描述</a>也能看出一些端倪，书中提到了<strong>crate root</strong>的概念，表示一个作为编译入口的源文件。如果是lib库的话则对应包的src子目录下的lib.rc文件，而可执行的话则对应包的src子目录下的main.rc文件。我们在导入包时所用到的<code>crate</code>关键字其实也指的是这个crate root。</p>
+<p>crate是rust包中的核心概念，在我们使用rust编程时会经常碰到，但是在不同的场景下意义有所不同，大体说来可以分为“作为包共享的基本单位（编译前的板条箱）”和“代表一个二进制生成单位（编译后的板条箱）”两种类型含义。</p>
+<p>我们先看看前者，在<a href="https://crates.io/">crates官网</a>上共享的一个包，以及rust文档中（可以通过cargo doc生成）的crate都可以看做是这个含义的典型代表。作为包共享的基本单位，一个crate源码中需要有对应的cargo.toml文件，用于描述包的基本信息、定义依赖项等。</p>
+<p>而后者主要体现在包依赖的路径上，对此我们在<a href="https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html#packages-and-crates">The Rust Programming Language一书对于crate的描述</a>也能看出一些端倪，书中提到了<strong>crate root</strong>的概念：表示一个作为编译入口的源文件。如果是lib库对应包的src子目录下的lib.rc文件，而可执行则对应包的src子目录下的main.rc文件。我们在导入包时所用到的<code>crate</code>关键字其实也指的是这个crate root。</p>
 <p>好了，get到crate这个比较陌生的概念之后，我们再看看其他包相关的概念吧，这些概念我们都能从其他语言中看到所以会简单带过。</p>
 <h3 id="package">package</h3>
 <p>package在英文中有包的意思，我们在使用node的npm、python的pip、java的maven或者gradle、go语言的mod时操作的都是类似的概念，简单来说就是一个高内聚、可共享的基本单位。</p>
@@ -174,8 +174,8 @@
 <p>module是模块的意思，这是我们最熟悉不过的单词了，在rust中通过<code>mod</code>关键词来表示。需要注意的是rust中的模块有两种定义方式：一种是显示地申明<code>mod A</code>；此外，当我们新建一个”*.rs”文件时，也会自动地以文件名生成一个mod，mod支持嵌套定义。</p>
 <p>熟悉C++、C#等语言的同学可能会发现这里的mod和namespace（命名空间）的概念很像，只是在rust中会根据源文件自动生成mod。</p>
 <h3 id="scope">scope</h3>
-<p>scope就是作用域了，有人可能会奇怪为什么在说包管理时会提到作用域，不过我觉得提到作用域能帮助我们更好地理解包依赖关系。其实module是在我们真正的代码逻辑之外的一层作用域，当导入（<code>use</code>）一个包或者类型的时候，实际上是将其他作用域中的元素导入到当前module所在的作用域。</p>
-<p>理解到这里对于下面这个最简单的例子也许你就不会奇怪了：为什么同一个文件中的单元测试还需要通过super来导入呢？因为我们定义了一个自作用域来包裹所有的测试函数。</p>
+<p>scope就是作用域了，有人可能会奇怪为什么在说包管理时会提到作用域，这是因为作用域的概念能帮助我们更好地理解包依赖关系。其实module是在我们真正的代码逻辑之外的一层作用域，当导入（<code>use</code>）一个包或者类型的时候，实际上是将其他作用域中的元素导入到当前module所在的作用域。</p>
+<p>理解到这里，对于下面这个最简单的例子也许你就不会奇怪了：为什么同一个文件中的单元测试还需要通过super来导入呢？因为我们定义了一个子作用域用来包裹所有的测试函数。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -241,9 +241,9 @@
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="导出操作">导出操作</h2>
-<p>说到模块导出我们就需要说一下rust的可见性。其实rust的可见性规则很简单，总结下来只有一个规则：<strong>除了trait之外的其他作用域内部元素都是默认对外不可见的</strong>。有了这个原则之后，我们看看两种常见的module导出吧：</p>
+<p>提到模块导出我们有必要说明一下rust的可见性。其实rust的可见性规则很简单，总结下来只有一个规则：<strong>除了trait之外的其他作用域内部元素都是默认对外不可见的</strong>。有了这个原则之后，我们看看两种常见的module导出吧：</p>
 <p>第一种其实是在定义module之间的从属关系。比如我们要在一个crate中添加一个文件<code>a.rs</code>，若想让其被正常调用一般会在crate root文件（一般是lib.rs、main.rs）中通过<code>mod a;</code>的方式申明，这样实际上是在告诉编译器“module a”是从属于crate root的。从上面我们知道crate root的内部元素默认对外不可见，那我们如果想要让&quot;module a&quot;对包外可见，则可以在申明时加上访问修饰符pub：<code>pub mod a;</code>，这样外部就可以访问到&quot;module a&quot;了。</p>
-<p>这里有两点需要额外说明一下。其一是上面我们通过<code>pub mod a;</code>的申明方式只是让外部可以看到&quot;module a&rdquo;，对于该模块内部的元素也需要添加访问修饰符pub才可见。其二是我们上面只说了一个crate的顶层申明，我们知道在rust的包里也支持通过子目录来组织模块，子目录下的mod.rs文件对该目录内的其他文件组织方式，和我们上面提到的crate root文件组织方式是一样的，这里就不再做具体说明了。</p>
+<p>这里有两点需要额外说明一下。其一是上面我们通过<code>pub mod a;</code>的申明方式只是让外部可以看到&quot;module a&rdquo;，对于该模块内部的元素也需要添加访问修饰符pub才可见。其二是我们上面只说了一个crate的顶层申明，我们知道在rust的包里也支持通过子目录来组织模块，子目录下的mod.rs文件对该目录内的其他文件组织方式和我们上面提到的crate root文件组织方式是一样的，这里就不再做具体说明了。</p>
 <p>第二种导出方式需要用到use关键词。从上文对作用域的说明我们知道，通过use我们可以将其他作用域下的元素导入到当前作用域下。接着如果我们在use之前加上pub修饰符，就可以在其他作用域内访问该作用域use所导入的元素了。这么说可能有点绕，我们看一个实际的例子吧：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -277,7 +277,7 @@
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>可以看到我们通过在&quot;module b&quot;中使用<code>pub use</code>的方式，让结构体A在该模块内也可见，然后就可以通过<code>b::A</code>的方式访问到结构体A。不过需要注意的是，<code>pub use</code>并不能改变结构体A的可访问性：如果我们将&quot;module a&quot;中对于结构体A的定义从<code>pub struct A;</code>更改为<code>struct A;</code>，rust编译器就会找你的麻烦。</p>
+</div><p>可以看到我们通过在&quot;module b&quot;中使用<code>pub use</code>的方式，让结构体A在该模块内也可见，然后就可以通过<code>bb::A</code>的方式访问到结构体A。不过需要注意的是，<code>pub use</code>并不能改变结构体A的可访问性：如果我们将&quot;module a&quot;中对于结构体A的定义从<code>pub struct A;</code>更改为<code>struct A;</code>，rust编译器就会找你的麻烦。</p>
 <p>此外，我们可以通过<code>as</code>关键字改变导出的名称，比如下面我通过as修饰符将结构体A改名为B：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -485,7 +485,7 @@
 </span></code></pre></td></tr></table>
 </div>
 </div><hr>
-<p>到这里关于rust包的说明告一段落，希望换一种思路说明能对大家能有所帮助。如果有什么疏漏和错误也希望大家能够留言给我，我们一起学习一起进步。</p>
+<p>到这里关于rust包的说明告一段落，希望换一种思路说明能对大家能有所帮助。如果有什么疏漏和错误也希望大家能够留言指正，我们一起学习一起进步。</p>
 
     </div>
 
