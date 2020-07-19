@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Rust双向链表分析之旅 - raindust</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Yan Mingzhi" /><meta name="description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &amp;hellip;" /><meta name="keywords" content="rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="http://raindust.github.io/post/2020/rust_double_linked_list/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/reset-even.css">
+
+
+<meta property="og:title" content="Rust双向链表分析之旅" />
+<meta property="og:description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/rust_double_linked_list/" />
+<meta property="article:published_time" content="2020-07-11T15:09:28+08:00" />
+<meta property="article:modified_time" content="2020-07-11T15:09:28+08:00" />
+<meta itemprop="name" content="Rust双向链表分析之旅">
+<meta itemprop="description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;">
+<meta itemprop="datePublished" content="2020-07-11T15:09:28&#43;08:00" />
+<meta itemprop="dateModified" content="2020-07-11T15:09:28&#43;08:00" />
+<meta itemprop="wordCount" content="8318">
+
+
+
+<meta itemprop="keywords" content="rust," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Rust双向链表分析之旅"/>
+<meta name="twitter:description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">raindust</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">raindust</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Rust双向链表分析之旅</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-07-11 </span>
+        <div class="post-category">
+            <a href="/categories/rust/"> rust </a>
+            </div>
+          <span class="more-meta"> 8318 words </span>
+          <span class="more-meta"> 17 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#节点定义">节点定义</a></li>
+    <li><a href="#链表定义">链表定义</a></li>
+    <li><a href="#单元测试">单元测试</a></li>
+    <li><a href="#节点实现">节点实现</a></li>
+    <li><a href="#链表实现">链表实现</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;“，后来看到一位大神的<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2015">playground</a>感觉很过瘾，自己照着实现了一下，接下来我会按自己的实现思路进行拆解。</p>
+<h2 id="节点定义">节点定义</h2>
+<p>我们知道双向链表的基本元素是一个节点（Node)，典型的定义是有一个数据字段以及两个指针字段，分别指向前一个节点和下一个节点（我们后面分别称为前驱节点和后继节点）。</p>
+<p>那么写一个rust style的节点定义需要如何写呢？我们可能第一反应是用<code>Box</code>，如果按直觉写下来可能是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">prev</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">next</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>因为我们是要写一个通用的链表，所以这里直接给出的是泛型的定义。</p>
+<p>我们知道<code>Box</code>是不能分享所有权的（类似于C++中的<code>auto_ptr</code>），而双向列表中一个节点会有两个指针指向它（前驱节点的next和后继节点的prev），这样的场景使用Box就不合适了。不过Box可以做单向链表，有兴趣的话看完之后大家也可以尝试用Box做一个简单的单项链表。</p>
+<p>顺着这个思路我们会想到<code>Rc</code>（类似于C++中的shared_ptr），接下来我们就用Rc来改造一下节点的定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">prev</span>: <span class="nc">Rc</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">next</span>: <span class="nc">Rc</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这样一来节点没多处引用的问题解决了，不过感觉有点做的太过了，因为这样很可能会造成指针循环引用。用过C++智能指针的同学对指针的循环引用可能不陌生，最简单的例子比如：两个对象A和B，它们都有一个智能指针的成员分别指向对方，这样A和B都无法先于对方释放，从而造成内存泄露。</p>
+<p>两个对象之间的循环引用比较容易发现，不过多个对象之间的循环引用就不那么明显了。再举个例子，我们在上述循环引用的两个对象A和B之间再加入C，即A引用C，C引用B，B反过来又引用A，这样就构成了三个对象之间的循环引用。如果在这个引用环中不断地加元素，变成1000个元素的循环，还会那么容易发现吗？而且这样涉及的元素更多，危害也会更大。这样的循环引用环现实中也是有的，最常见的就是循环链表。所以当有环形引用关系时，我们一定要留心潜在的内存泄露。</p>
+<p>回到我们的代码中，我们看看相邻两个节点的引用关系：我们假设A的next指向B，也就是说A的后继节点是B，那么反过来说B的前驱节点是A，即B的prev指向A。这和我们描述的两个对象间的循环引用现象一致。因此，我们需要改进数据结构打断这种循环引用关系，接下来需要引入的是<strong>弱引用</strong>指针。</p>
+<p>我们知道类似于Rc这种智能指针是通过引用计数来实现的，每当增加一个Rc的引用，引用计数就会加1，当引用计数减为0时会自动释放其指向的内存。循环引用的情况引用计数会至少维持引用计数为1，因此总没有机会自动释放。而弱引用指针不同的是，它并不会增加引用计数（或者是不会增加<strong>强引用</strong>计数，即二者的引用计数系统时分开的）。我们接下来就借助rust标准库中的弱引用指针——Weak来改造节点的数据结构如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">prev</span>: <span class="nc">Weak</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">next</span>: <span class="nc">Rc</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>到这里节点定义已经很接近我们想要的了，但是我们回想一下（非循环）链表的边界——首尾节点的情况：头结点因为是第一个节点，所以是没有前驱的；尾节点因为是最后一个节点，所以是没有后继的。“没有”在编程中我们一般会用空来表达，而在rust中有一个更人性化的泛型枚举来帮我们处理，这个枚举就是Option。</p>
+<p>在我们看看刚才的定义，实际上是没有表达为空的能力的。因此，我们需要为prev和next字段加上Option。那么问题来了，我们需要在哪一层加上Option呢，最外层？Node？还是类型T呢？我们定义prev和next字段是为了对应一个节点的引用，因此在Node这里或者最外层会比较合理。另外，我们希望的是可以简单置空的效果，比如<code>node.prev = None;</code>这样，所以最外层比较合适。所以加上Option之后会变成这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">prev</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Weak</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">next</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这样已经很接近了，我们来做一个小的测试吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">data</span>: <span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">prev</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">next</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">};</span><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">data</span>: <span class="mi">2</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">prev</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">next</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">};</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="n">a</span><span class="p">.</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="n">b</span><span class="p">));</span><span class="w">
+</span><span class="w"></span><span class="n">a</span><span class="p">.</span><span class="n">next</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">None</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>上面代码我们构建了两个节点a和b，我们先让b成a的后继节点：<code>a.next = Some(Rc::new(b));</code>，这一步还挺顺利，但是下一步我们让a后继的后继节点变为空时会报&quot;cannot assign to data in an <code>Rc</code>&quot;这样的错误。我们可以先把<code>as_ref().unwrap()</code>这些东东忽略，简单理解最后一行就是<code>a.next.next = None</code>这样。类似于后继的后继赋值这种操作在双向链表中还是挺常见的，我们还是回过头分析一下为什么会报错吧。</p>
+<p>回忆我们刚开始学习rust时，会比较在意rust语言中默认变量是不可变的，因此我们需要显式在声明时加上<code>mut</code>关键字让该变量可变。而我们在定义节点前驱和后继节点时并没有指明其内部引用的节点是可变的，因此当我们尝试更改改节点应用的时候就会报错。我们再来看一个很简单的例子验证一下刚才的推断：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="nc">Rc</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到我们申明了一个类型为<code>Rc&lt;i32&gt;</code>的变量，然后尝试更改a的值，编译器报了同样的错误。这时我们最容易想到的改进方法是在Rc声明内部类型时指定可变性，将<code>Rc&lt;i32&gt;</code>改为<code>Rc&lt;&amp;mut i32&gt;</code>，然后试着更改成如下形式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">b</span>: <span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="nc">Rc</span><span class="o">&lt;&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="o">**</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>编译发现还是报了同样的错误。这条路看来是走不通了，我们试着将跳出目前的困境看看智能指针相关的类型还有什么，这时就会发现两个其他语言中找不到的类型：<code>Cell</code>和<code>RefCell</code>。看两者的说明都是用来改变内部可变性的，这正是我们想要的！接下来我们先使用<code>Cell</code>尝试让上面的例子编译通过吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cell</span>::<span class="n">Cell</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="nc">Rc</span><span class="o">&lt;</span><span class="n">Cell</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="n">Cell</span>::<span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w">
+</span><span class="w"></span><span class="n">a</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>编译之后发现终于被放行了：）通过<code>a.get()</code>查看发现值已经成功修改成了<code>5</code>，可喜可贺。</p>
+<p>回过头来看看<code>Cell</code>和<code>RefCell</code>的区别：通过阅读文档我们发现<code>Cell</code>用于实现了<code>Copy trait</code>的类型（可以简单理解为值类型），而其他类型则使用<code>RefCell</code>。我们的Node结构体不打算实现<code>Copy trait</code>，所以我们通过<code>RefCell</code>修改节点的定义如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
+</span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cell</span>::<span class="n">RefCell</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">prev</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Weak</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">next</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>大功告成…实际上还没有，我们只是实现了节点的定义。不过我们已经渐入佳境了；）</p>
+<p>也许你会觉得类似这样的<code>Option&lt;Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;&gt;</code>定义看着头晕，也可以通过<code>type NodePtr&lt;T&gt; = Option&lt;Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;&gt;;</code>这种方式把细节影藏起来。不过我们这里还是需要探究一下细节，所以还是保持原样吧。</p>
+<h2 id="链表定义">链表定义</h2>
+<p>完成了节点结构的定义之后，我们也可以用类似的方式完成双向链表的结构。我们为双向链表结构中添加头指针和尾指针两个成员。我们总结这两个成员的一些特性吧：</p>
+<ul>
+<li>它们一般会指向某个节点</li>
+<li>当链表为空时它们为空</li>
+<li>释放链表时会首先去除他们引用，然后触发链上节点释放的多米诺骨牌</li>
+<li>当在链表首部或者尾部插入时会改变他们指向的节点</li>
+</ul>
+<p>这样分析下来，头指针和尾指针和Node中的next成员很像，参照next的定义我们实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">first</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">last</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>通过分析节点的定义，这里实现链表定义水到渠成，理解之后就很简单了是吧。</p>
+<h2 id="单元测试">单元测试</h2>
+<p>限于篇幅我们在文中只实现双向链表的插入行为，其他行为大家可以参考我们接下来的分析来尝试实现，rustc是我们耐心且忠实的老朋友，多问问她一定没问题的：）</p>
+<p>好了，接下来我们用单元测试描绘一下想要实现的行为吧。我们想要实现的是<code>append</code>行为，每次操作会追加到链表的末尾。因此我们会先创建一个链表，往链表中<code>append</code>几个节点，然后验证一下这些节点是否都成功加入到链表中，并且节点的顺序是否符合预期。</p>
+<p>按照rust单元测试惯例，我们在实现上面逻辑的文件底部添加单元测试的定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[cfg(test)]</span><span class="w">
+</span><span class="w"></span><span class="k">mod</span> <span class="nn">tests</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="p">{</span><span class="n">List</span><span class="p">};</span><span class="w">
+</span><span class="w">    
+</span><span class="w">  </span><span class="cp">#[test]</span><span class="w">
+</span><span class="w">  </span><span class="k">fn</span> <span class="nf">test_list_append</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 实现测试逻辑
+</span><span class="c1"></span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>接下来我在<code>test_list_append</code>方法中添加测试逻辑。按照上面的分析我们需要先创建一个链表，我们当然可以直接地这样创建：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">first</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">last</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">};</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>不过这样不利于后期的使用，大体说来有下面的问题：</p>
+<ul>
+<li>每次都定义太繁琐</li>
+<li>定义的细节暴露出来，看起来不直观，会造成“视觉污染”</li>
+<li>如果构造逻辑后续发生变化（比如要增加一些额外的处理加工），我们每一处创建都要再加上类似的逻辑，不符合我们一贯偷懒的作风</li>
+</ul>
+<p>所以我们决定我们需要为我们的List添加一个名为<code>new</code>的构造方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">l</span>: <span class="nc">List</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>注意这我们为变量<code>l</code>的后面显式地指定了类型<code>List&lt;i32&gt;</code>，这是因为我们的链表是泛型的，而这里没法自动推导出类型所以就直接告诉编译器“我想要生成这个结果”。这句话还有另一种实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span>::<span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这里是就相当于告诉编译器“我知道节点的类型是什么”。也许有人觉得<code>List::&lt;i32&gt;::new()</code>这种表达方式很奇怪，其实这和<code>&lt;List&lt;i32&gt;&gt;::new()</code>是等价的（熟悉C++的同学对这种表达方式一定不陌生），是rust中一种减少泛型<code>&lt;&gt;</code>嵌套的表达方式。</p>
+<p>构造的话题我们就说到这里吧，上面几种表达方式大家可以按喜好来用，不过在实际生产开发中为了便于阅读最好保持风格的一惯性。</p>
+<p>接下来我们为我们的链表中添加几个元素：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="p">..</span><span class="mi">6</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>我们依次给链表中添加了1~5几个数字，接下来我们就验证一下添加后的结果是否正确。为此我们需要申明一个指针的引用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>我们看到这里我们定义了一个<code>cur</code>的变量，它最开始指向链表的头指针的位置。那这里为什么需要<code>clone</code>呢？<code>clone</code>的过程到底做了什么呢？</p>
+<p>我们先看看后一个问题吧。<code>clone</code>方法实际上是对<code>Clone</code> trait的实现。我们知道这里的first类型是<code>Option&lt;Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;&gt;</code>，因此这里调用<code>clone</code>会首先调用Option的<code>clone</code>方法，我们看看Option中<code>clone</code>方法的实现吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[inline]</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="nb">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">clone</span><span class="p">()),</span><span class="w">
+</span><span class="w">    </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>我们看到这里实际上只是调用Option内部类型的clone方法，由于这里的内部类型是<code>Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，因此我们在往下看下Rc中的<code>clone</code>方法实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[inline]</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Rc</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">inc_strong</span><span class="p">();</span><span class="w">
+</span><span class="w">  </span><span class="n">Self</span>::<span class="n">from_inner</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">ptr</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>通过这两个方法名，我们就能大概猜测到这里增加了引用计数，并且返回了一个自己的指针拷贝，而指针实际上就是一个<code>RefCell&lt;Node&lt;T&gt;&gt;</code>。因此调用<code>clone</code>实际上是以增加引用计数的方式返回了一个相同的指针，而这正是我们想要的获取指针的方式。</p>
+<p>再来看看为什么要调用<code>clone</code>。如果找到Option的定义，我们会发现Option是实现了<code>Copy</code> trait的，我们知道实现了<code>Copy</code>之后可以看做是“值类型”，因此当我们像<code>let mut cur = l.first;</code>这样赋值时不会触发<code>move</code>操作，而是会进行拷贝操作。</p>
+<p>那么如何定义拷贝操作呢？找到<code>Copy</code>的定义，我们会发现它实际上是继承了<code>Clone</code> trait：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[lang = </span><span class="s">&#34;copy&#34;</span><span class="cp">]</span><span class="w">
+</span><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Copy</span>: <span class="nb">Clone</span> <span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="c1">// Empty.
+</span><span class="c1"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>所以<code>let mut cur = l.first;</code>这句在句末加上<code>clone</code>并不是必须的，因为默认的拷贝操作也会调用<code>clone</code>方法的。不过为了让这里的操作用意看起来更明显一些，我们还是在这里显式地加上了<code>clone</code>。</p>
+<p>好了，接下来我们通过循环来依次比对值。我将剩下的整个逻辑都贴出来吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">cur_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">while</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">assert_eq</span><span class="o">!</span><span class="p">(</span><span class="n">cur_value</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">borrow</span><span class="p">().</span><span class="n">data</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="n">cur_value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w">  </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">borrow</span><span class="p">().</span><span class="n">next</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到我们在这里定义了一个当前比对的值，然后通过循环判断是否符合预期。这一段整体都好理解，我们比较在意的是<code>as_ref().borrow()</code>这样的表达式，我们就重点看一下这个好了。</p>
+<p>我们通过<code>let Some</code>表达式来定义node变量，他的类型则是<code>Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，所以这里的<code>as_ref</code>是对Rc的操作，我们再看看Rc关于<code>as_ref</code>的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span>: <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">AsRef</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="k">fn</span> <span class="nf">as_ref</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">T</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="o">&amp;**</span><span class="bp">self</span><span class="w">
+</span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到as_ref实际上是将内部的类型<code>T</code>转换为<code>&amp;T</code>，因此对node执行<code>as_ref</code>操作后的类型是<code>&amp;RefCell&lt;Node&lt;T&gt;&gt;</code>。</p>
+<p>接下来的再看看<code>borrow</code>方法吧，borrow方法在RefCell中实现，rust中的定义如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">borrow</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Ref</span><span class="o">&lt;</span><span class="na">&#39;_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">try_borrow</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;already mutably borrowed&#34;</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到最终返回的是一个<code>Ref&lt;'_, T&gt;</code>类型，第一个参数是生命周期参数，通过<code>_</code>忽略后实际的类型就是<code>Ref&lt;Node&lt;T&gt;&gt;</code>。</p>
+<p>我们大概明白了<code>as_ref</code>和<code>borrow</code>的作用之后，现在回过头来想想为什么要这样做。上面我通过循环比对的时候有在第3行和第6行两个地方调用了这两个方法，而这两个地方实际上都是想要访问<code>Node</code>结构体中的成员（分别是<code>data</code>和<code>next</code>）。可是我们知道node类型是<code>Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，为此我们需要像剥洋葱一样一层层地退去外面包裹的类型，因此才会通过<code>as_ref</code>和<code>borrow</code>方法将Rc和RefCell褪去。</p>
+<p>可是等等，<code>borrow</code>之后的类型是<code>Ref&lt;Node&lt;T&gt;&gt;</code>，为什么就可以直接用<code>.</code>操作符来访问<code>Node</code>的成员了呢？</p>
+<p>我们通过<code>Ref</code>这个类型来发现线索吧，找到<code>Ref</code>的定义我们会看到它实现了<code>Deref</code> trait：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span>: <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Deref</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Ref</span><span class="o">&lt;</span><span class="na">&#39;_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="k">type</span> <span class="nc">Target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">;</span><span class="w">
+</span><span class="w">  
+</span><span class="w">  </span><span class="cp">#[inline]</span><span class="w">
+</span><span class="w">  </span><span class="k">fn</span> <span class="nf">deref</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">T</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">value</span><span class="w">
+</span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>Deref</code>是一个很有意思的trait，如果类型<code>Y</code>实现了这个trait，那对于类型<code>Y</code>的一个变量y，当我们执行<code>*y</code>解引用操作时，rust事实上在底层运行了<code>*(y.deref())</code>操作。事实上所有的智能指针也是实现了<code>Deref</code> trait之后才会变得能够<a href="https://kaisery.github.io/trpl-zh-cn/ch15-02-deref.html">当做常规引用处理</a>。</p>
+<p>这样最后一个谜题也解开了，我们的单元测试分析也终于到最后啦。不过我们这里只是添加了一个简单的正常测试，在实际开发中我们还需要添加边界值、异常测试等保障我们逻辑的健壮性。</p>
+<p>虽然我们还没有实现具体的逻辑，不过人性化的rust也帮我们准备了<code>cargo test --no-run</code>这样的只保障编译通过的测试方式。不过遗憾的是即便如此也会报错，因为我们还没有定义测试中用到的方法。事不宜迟我们立马补上：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">List</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">      </span><span class="n">first</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">      </span><span class="n">last</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">append</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">data</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// todo: complete me
+</span><span class="c1"></span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这样<code>cargo test --no-run</code>终于通过啦。</p>
+<h2 id="节点实现">节点实现</h2>
+<p>这里我们还是参考<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2015">playground</a>的实现在Node中添加一个构造方法和一个append方法，这里的append会递归查找自己的后继节点，直到找到最后一个节点。整个逻辑比较简单我们就直接贴出来吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">data</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">      </span><span class="n">data</span><span class="p">,</span><span class="w">
+</span><span class="w">      </span><span class="n">prev</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">      </span><span class="n">next</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">append</span><span class="p">(</span><span class="n">node</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">data</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">is_last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">borrow_mut</span><span class="p">().</span><span class="n">next</span><span class="p">.</span><span class="n">is_none</span><span class="p">();</span><span class="w">
+</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">is_last</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">new_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Self</span>::<span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">);</span><span class="w">
+</span><span class="w">      </span><span class="n">new_node</span><span class="p">.</span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">Rc</span>::<span class="n">downgrade</span><span class="p">(</span><span class="n">node</span><span class="p">));</span><span class="w">
+</span><span class="w">      </span><span class="n">node</span><span class="p">.</span><span class="n">borrow_mut</span><span class="p">().</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="n">RefCell</span>::<span class="n">new</span><span class="p">(</span><span class="n">new_node</span><span class="p">)));</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">borrow_mut</span><span class="p">().</span><span class="n">next</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="n">Self</span>::<span class="n">append</span><span class="p">(</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w">
+</span><span class="w">      </span><span class="p">}</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w">  </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>我们先看看比较简单的new方法，该方法中的data初始化和其他两个变量看起来不太一样，这是因为在rust的结构体初始化时，如果成员变量名和用来初始化的名称相同就可以用一个变量代替。</p>
+<p>然后再看重头戏append吧，我们会发现append的第一个参数类型是<code>&amp;mut Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，需要声明为可变引用<code>&amp;mut</code>的原因是我们可能会在内部改变node成员变量的值。我们会看到和<code>Node</code>以及<code>List</code>中的引用计数指针比起来缺少了Option，这是因为我们希望传入的都是非空的值，为<code>None</code>的情况就自然地被我们过滤掉了。</p>
+<p>实现方法的逻辑可以分为两个部分：如果已经到最后一个节点（尾节点），我们就创建一个节点作为新的尾节点；否则我们就找到该节点的下一个节点来递归调用该方法。</p>
+<p>实现逻辑比较简单我们就不再做进一步说明了。我们接下来看一下几处不好理解的语法点吧。</p>
+<p>我们会发现代码中多处用到了<code>borrow_mut</code>方法，它和我们前面说明的<code>borrow</code>类似，用来返回内部类型的可变引用，具体实现是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">borrow_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">RefMut</span><span class="o">&lt;</span><span class="na">&#39;_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">try_borrow_mut</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;already borrowed&#34;</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到返回的类型是<code>RefMut</code>，该类型和<code>Ref</code>也是相似的类型，而且它也同样实现了<code>Deref</code> trait，这意味着我们可以当做常规引用一样访问<code>Node</code>结构体的内部成员了。</p>
+<p>我们在定义<code>Node</code>的时候将前驱指针的类型设置成弱引用指针<code>Weak</code>的形式，因此在上面代码的14行初始化的时候，我们需要通过<code>Rc::downgrade</code>方法把<code>Rc&lt;T&gt;</code>转换为<code>Weak&lt;T&gt;</code>。</p>
+<p>15行中为类型为<code>Option&lt;Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;&gt;</code>的后继类型指针next设置新值的时候，我们使用了<code>Some(Rc::new(RefCell::new(new_node)));</code>这样的表达式。最外层的<code>Some</code>是Option枚举类型的非空成员，Some内部我们连续调用多个类型的构造器<code>new</code>，可以看到<code>new</code>构造器也是rust语言中约定俗成的构造器方法名。</p>
+<p>接下来我们将视线下移到17、18行，我们通过<code>node.borrow_mut().next</code>得到的是<code>Option&lt;Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;&gt;</code>类型，不过我们在调用的时候期望的类型是<code>&amp;mut Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，我们要怎样剥掉外面的Option类型并且变成可变引用呢？</p>
+<p>我们第一反应可能会是通过Option的常用方法<code>unwrap</code>，不过这个方法如果为空的时候会抛出panic，所以除非这就是你想要的错误处理方式，或者你可以百分之百肯定这里不为空的时候再考虑使用它。</p>
+<p>考虑之后我们还是通过模式匹配<code>let Some</code>的方式，不过我们不加任何修饰得到的变量是<code>Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，怎样才能得到<code>&amp;mut Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>呢？在匹配表达式中加上<code>mut</code>关键字行得通，不过要加上取地址附<code>&amp;</code>编译器就会找我们的麻烦了。</p>
+<p>这个时候我们需要借助一个关键：<code>ref</code>。它和<code>&amp;</code>在很多时候可以等价使用的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>上面两个变量都是<code>&amp;i32</code>类型。不过也有互相不能替换的时候，比如上面我们遇到的绑定（模式匹配）情况，就只能借助<code>ref</code>；而如果需要对一个表达式取地址，那就只能用<code>&amp;</code>而不能用<code>ref</code>。如果要加深理解的话，我觉得可以再换个角度思考一下使用场景：左值（left value）情况下只能用<code>&amp;</code>；右值情况下都可以用<code>ref</code>，并且有部分情况（模式匹配）是只能用<code>ref</code>的。</p>
+<p>节点实现的说明就到这里啦，总体来说还是挺顺利的。</p>
+<h2 id="链表实现">链表实现</h2>
+<p>终于到最后了，还记得我们之前我们还没有实现的<code>append</code>方法吗？我接下来就来搞定它。</p>
+<p>其实我们已经在节点里已经有一个<code>append</code>方法了，它会通过递归找到一个给定节点的后续节点，直到最后一个节点的时候新增一个节点作为新的末尾节点。这个方法已经涵盖了追加值的核心逻辑，不过在节点中的方法只负责与节点相关的添加操作。而当我们通过链表新增一个节点的时候，链表层面也是有变化的：追加之后原来的尾结点已经不再是尾结点了，因此我们要将<code>last</code>成员指向新的尾结点。</p>
+<p>此外，我们还需要考虑一下整个链表为空时的新增情况，这时候我们甚至都不用调用节点的append方法了。</p>
+<p>好了，我们贴上代码吧：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="n">Node</span>::<span class="n">append</span><span class="p">(</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w">
+</span><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">borrow</span><span class="p">().</span><span class="n">next</span><span class="w">
+</span><span class="w">    </span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">clone</span><span class="p">();</span><span class="w">
+</span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="n">RefCell</span>::<span class="n">new</span><span class="p">(</span><span class="n">Node</span>::<span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)));</span><span class="w">
+</span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">clone</span><span class="p">());</span><span class="w">
+</span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">f</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>经过我们之前的披荆斩棘，这段代码对我们来说就是一马平川了。注意我们在第3行和第4行都用到了<code>unwrap</code>，不过当第二句插入成功后，这两处都是确定不会为空的情况。</p>
+<p>这下我们去掉<code>--no-run</code>的参数用<code>cargo test</code>运行一下单元测试，大功告成🎉</p>
+<p>不过目前为止的实现还有很多可以改进的地方，比如在节点的<code>append</code>方法里，递归调用的情况我们只处理了非空的情况，如果能将空值通过Result方式抛出也是极好的。再在比如链表的<code>append</code>方法里，既然我们定义了尾指针<code>last</code>，那也不需要从头指针<code>first</code>开始去找它了。更重要的是，我们只做了<code>append</code>，还有插入、删除、检索等等功能没有实现，这些功能都后续交给大家来继续探索啦。</p>
+<hr>
+<p>rust语言学习曲线很陡峭，不过除了类型系统、生命周期这些大块的理论知识点（学习理论强烈推荐张汉东老师的《Rust编程之道》，深入浅出娓娓道来）之外，主要还是一些细碎的知识点，我们建立起Rust整体语法认知框架之后，通过不断练习掌握零散的知识点，再不断地建立起与已有知识的关联，相信不久的将来一定会开花结果。</p>
+<p>我目前也在探索的途中，有时也会着急也会因进步太小而沮丧。不过最近很喜欢胡适先生的一句话，贴在这里作为结束语与大家一起共勉：</p>
+<blockquote>
+<p>怕什么真理无穷，进一寸有一寸的欢喜</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Yan Mingzhi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-07-11
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/raindust/blog-source/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/Wechat.jpeg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/alipay.jpeg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/rust/">rust</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020/introduce_to_rust_package/">
+            <span class="next-text nav-default">rust包使用入门</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><script src="https://utteranc.es/client.js" repo="raindust/blog-source" issue-term="pathname" label="Comment"
+            theme="github-light" crossorigin="anonymous" async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+      utterance.</a></noscript>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:realraindust@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://github.com/raindust" class="iconfont icon-github" title="github"></a>
+  <a href="http://raindust.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Yan Mingzhi</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

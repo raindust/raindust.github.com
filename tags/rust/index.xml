@@ -6,10 +6,19 @@
     <description>Recent content in rust on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 25 Jun 2020 13:21:13 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2020 15:09:28 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Rust双向链表分析之旅</title>
+      <link>http://raindust.github.io/post/2020/rust_double_linked_list/</link>
+      <pubDate>Sat, 11 Jul 2020 15:09:28 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2020/rust_double_linked_list/</guid>
+      <description>对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &amp;hellip;</description>
+    </item>
     
     <item>
       <title>rust包使用入门</title>

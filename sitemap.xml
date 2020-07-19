@@ -3,48 +3,55 @@
   
   <url>
     <loc>http://raindust.github.io/categories/</loc>
-    <lastmod>2020-06-25T13:21:13+08:00</lastmod>
+    <lastmod>2020-07-11T15:09:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://raindust.github.io/post/</loc>
-    <lastmod>2020-06-25T13:21:13+08:00</lastmod>
+    <lastmod>2020-07-11T15:09:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://raindust.github.io/</loc>
-    <lastmod>2020-06-25T13:21:13+08:00</lastmod>
+    <lastmod>2020-07-11T15:09:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://raindust.github.io/tags/rust/</loc>
-    <lastmod>2020-06-25T13:21:13+08:00</lastmod>
+    <lastmod>2020-07-11T15:09:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://raindust.github.io/categories/rust/</loc>
-    <lastmod>2020-06-25T13:21:13+08:00</lastmod>
+    <lastmod>2020-07-11T15:09:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://raindust.github.io/post/2020/introduce_to_rust_package/</loc>
-    <lastmod>2020-06-25T13:21:13+08:00</lastmod>
+    <loc>http://raindust.github.io/post/2020/rust_double_linked_list/</loc>
+    <lastmod>2020-07-11T15:09:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://raindust.github.io/tags/</loc>
+    <lastmod>2020-07-11T15:09:28+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/post/2020/introduce_to_rust_package/</loc>
     <lastmod>2020-06-25T13:21:13+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
