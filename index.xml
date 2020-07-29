@@ -6,10 +6,19 @@
     <description>Recent content on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 11 Jul 2020 15:09:28 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jul 2020 21:40:15 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>用cargo remote解放你的Mac电脑</title>
+      <link>http://raindust.github.io/post/2020/rust_cargo_remote/</link>
+      <pubDate>Wed, 29 Jul 2020 21:40:15 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/post/2020/rust_cargo_remote/</guid>
+      <description>rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程</description>
+    </item>
     
     <item>
       <title>Rust双向链表分析之旅</title>

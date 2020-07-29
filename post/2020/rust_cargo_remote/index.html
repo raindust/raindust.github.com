@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>用cargo remote解放你的Mac电脑 - raindust</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Yan Mingzhi" /><meta name="description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程" /><meta name="keywords" content="rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.72.0 with theme even" />
+
+
+<link rel="canonical" href="http://raindust.github.io/post/2020/rust_cargo_remote/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/reset-even.css">
+
+
+<meta property="og:title" content="用cargo remote解放你的Mac电脑" />
+<meta property="og:description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/rust_cargo_remote/" />
+<meta property="article:published_time" content="2020-07-29T21:40:15+08:00" />
+<meta property="article:modified_time" content="2020-07-29T21:40:15+08:00" />
+<meta itemprop="name" content="用cargo remote解放你的Mac电脑">
+<meta itemprop="description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程">
+<meta itemprop="datePublished" content="2020-07-29T21:40:15&#43;08:00" />
+<meta itemprop="dateModified" content="2020-07-29T21:40:15&#43;08:00" />
+<meta itemprop="wordCount" content="1962">
+
+
+
+<meta itemprop="keywords" content="rust," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用cargo remote解放你的Mac电脑"/>
+<meta name="twitter:description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">raindust</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">raindust</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">用cargo remote解放你的Mac电脑</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-07-29 </span>
+        <div class="post-category">
+            <a href="/categories/rust/"> rust </a>
+            </div>
+          <span class="more-meta"> 1962 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。</p>
+<p>虽然找到了<a href="https://medium.com/nearprotocol/remote-development-and-debugging-of-rust-with-clion-39c38ced7cc1">用Clion远程调试</a>的方法，不过需要用鼠标点来点去，对于习惯用键盘和命令行的我只能表示这不是我的菜。于是我继续寻找发现了<a href="https://github.com/sgeisler/cargo-remote">cargo remote</a>，安装之后就可以通过类似<code>cargo remote -r name@host -c -- build --release</code>这样的命令进行远程编译啦。</p>
+<p>如果想进一步偷懒还可以在<code>~/.config/cargo-remote/cargo-remote.toml</code>文件中添加类似<code>remote = &quot;name@host&quot;</code>的一行配置，这样就可以省去<code>remote</code>参数的配置，远程编译命令变成<code>cargo remote -c -- build --release</code>。</p>
+<p>是不是感觉和本地编译差不多啦？不过上面的命令成功仅限于本地和远程操作系统一样的情况。我本地操作系统是Mac OSX，而远程则是CentOS7，远程编译之后的可执行在本地跑不起来。大概分析一下cargo remote工具发现它的工作原理是这样的，利用<code>rsync</code>工具拷贝代码到远程，然后在远程运行<code>cargo remote -c --</code>后面的命令，并在编译完成后把结果拷贝到本地。由于<code>build --release</code>会默认选择操作系统所在的target（在CentOS下是<code>x86_64-unknown-linux-gnu</code>），编译后是linux的可执行，在本地自然是运行不起来的。</p>
+<p>不过幸运的是<code>rustup</code>工具为我们提供了方便的交叉编译命令，我们只要通过<code>rustup target add x86_64-apple-darwin</code>这样的命令就可以添加对Mac OSX平台（darwin是Mac系统的代号）的支持了。</p>
+<p><em>顺便提一句，如果想对如nightly这样其他的toolchain添加target，可以通过类似<code>rustup target add x86_64-apple-darwin --toolchain nightly</code>这样通过参数指定toolchain的方式来添加，运行cargo命令时也需要像<code>cargo +nightly build --release</code>这样显示地指定toolchain。</em></p>
+<p>好了，我们把编译命令改成<code>cargo remote -c -- build --release --target x86_64-apple-darwin</code>来远程编译，这时远程编译器会报“<em>Linking with <code>cc</code> failed: exit code: 1</em>”这样的错误。这是一个gcc链接的错误，接着去rust语言官方issue逛逛，发现有人说这是一个很久没有解决的问题。</p>
+<p>后面又在<a href="https://github.com/japaric/rust-cross#i-want-to-build-binaries-for-linux-mac-and-windows-how-do-i-cross-compile-from-linux-to-mac">Everything you need to know about cross compiling Rust programs!</a>这样一个Github repo中发现类似问题的FAQ，作者给出了一个简短的答案：<strong>不行！</strong> 原因是不同操作系统上C语言的toolchain有差别所以没法直接支持交叉编译。</p>
+<p>怎么办，我的远程编译之旅要被判死刑了么？不死心的我在<a href="https://www.reddit.com/r/rust/comments/6rxoty/tutorial_cross_compiling_from_linux_for_osx/">reddit</a>上发现一个老兄写了一个和我情况类似的教程，顺着这条线索我找到了<a href="https://github.com/tpoechtrager/osxcross">osxcross</a>这个Github库。</p>
+<p>看这个名字就感觉有戏呀，而且star数也上千了，于是我决定试一下。这个库的README上给出的解决方案是：在mac和linux上各拷贝一份代码，先在mac上利用XCode先编译出来Mac OS SDK，然后拷贝到linux系统上进行编译，在Linux编译成功后会在<code>target/bin</code>子目录下出现一系列以<code>x86_64-apple-darwin</code>开头的可执行和库文件。我们可以按照README的指示进一步把刚才的目录加到<code>$PATH</code>中去。</p>
+<p>接下来我们需要在<code>~/.cargo/config</code>文件中添加下面的配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">target</span><span class="p">.</span><span class="nx">x86_64</span><span class="err">-</span><span class="nx">apple</span><span class="err">-</span><span class="nx">darwin</span><span class="p">]</span>
+<span class="nx">linker</span> <span class="p">=</span> <span class="s2">&#34;x86_64-apple-darwin19-clang&#34;</span>
+<span class="nx">ar</span> <span class="p">=</span> <span class="s2">&#34;x86_64-apple-darwin19-ar&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意我的系统版本是19，因此在配置中会出现<code>darwin19</code>这样的字样，如果你的版本和我不一样需要做更改。当然最简单的办法就是去刚才osxcross编译后的<code>target/bin</code>目录下看看对应的文件是什么名字，然后拷贝到这里就可以了。</p>
+<p>接下来我们在本地再次运行<code>cargo remote -c -- build --release --target x86_64-apple-darwin</code>发现已经build成功啦🎉不过要注意编译后的结果方在本地<code>target</code>目录的<code>x86_64-apple-darwin</code>子目录（因为我们制定了target）下，而不是像本地默认编译一样<code>target</code>下一级就是<code>release</code>或者<code>debug</code>了。</p>
+<hr>
+<p>远程编译还会存在一些小瑕疵：比如远程编译后在本地通过<code>cargo run</code>的方式运行还会触发编译，因此最好还是直接采用运行编译好的可执行的方式；还有原生的<code>cargo remote</code>工具会在远程的<code>$HOME</code>目录下新建一个<code>remotes-build</code>子目录来编译，由于每一次编译完成不会清理（这也在情理之中，不清理下次远程编译会很快），如果你的远程<code>$HOME</code>目录所在盘空间也捉襟见肘的话可以试试<a href="https://github.com/raindust/cargo-remote">我的改进版</a>，主要是添加了一个可以配置远程编译目录的<code>build-root</code>参数，这个也一样支持在<code>~/.config/cargo-remote/cargo-remote.toml</code>中配置默认值哦。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Yan Mingzhi</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-07-29
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/raindust/blog-source/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">Reward</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/Wechat.jpeg">
+        <span>wechat</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/alipay.jpeg">
+        <span>alipay</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/rust/">rust</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020/rust_double_linked_list/">
+            <span class="next-text nav-default">Rust双向链表分析之旅</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer><script src="https://utteranc.es/client.js" repo="raindust/blog-source" issue-term="pathname" label="Comment"
+            theme="github-light" crossorigin="anonymous" async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+      utterance.</a></noscript>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:realraindust@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://github.com/raindust" class="iconfont icon-github" title="github"></a>
+  <a href="http://raindust.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Yan Mingzhi</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
