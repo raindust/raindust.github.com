@@ -6,10 +6,28 @@
     <description>Recent content in Tags on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Jul 2020 21:40:15 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 30 Aug 2020 21:24:19 +0800</lastBuildDate>
     
 	<atom:link href="http://raindust.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>blockchain</title>
+      <link>http://raindust.github.io/tags/blockchain/</link>
+      <pubDate>Sun, 30 Aug 2020 21:24:19 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/blockchain/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>polkadot</title>
+      <link>http://raindust.github.io/tags/polkadot/</link>
+      <pubDate>Sun, 30 Aug 2020 21:24:19 +0800</pubDate>
+      
+      <guid>http://raindust.github.io/tags/polkadot/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>rust</title>
@@ -17,15 +35,6 @@
       <pubDate>Wed, 29 Jul 2020 21:40:15 +0800</pubDate>
       
       <guid>http://raindust.github.io/tags/rust/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>blockchain</title>
-      <link>http://raindust.github.io/tags/blockchain/</link>
-      <pubDate>Mon, 08 Jun 2020 20:12:41 +0800</pubDate>
-      
-      <guid>http://raindust.github.io/tags/blockchain/</guid>
       <description></description>
     </item>
     

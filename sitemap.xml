@@ -2,22 +2,64 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://raindust.github.io/tags/blockchain/</loc>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/categories/blockchain/</loc>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://raindust.github.io/categories/</loc>
-    <lastmod>2020-07-29T21:40:15+08:00</lastmod>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/post/2020/cumulus-start-to-run/</loc>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/tags/polkadot/</loc>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/categories/polkadot/</loc>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://raindust.github.io/post/</loc>
-    <lastmod>2020-07-29T21:40:15+08:00</lastmod>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://raindust.github.io/</loc>
-    <lastmod>2020-07-29T21:40:15+08:00</lastmod>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/tags/</loc>
+    <lastmod>2020-08-30T21:24:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -31,13 +73,6 @@
   
   <url>
     <loc>http://raindust.github.io/categories/rust/</loc>
-    <lastmod>2020-07-29T21:40:15+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://raindust.github.io/tags/</loc>
     <lastmod>2020-07-29T21:40:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -60,20 +95,6 @@
   <url>
     <loc>http://raindust.github.io/post/2020/introduce_to_rust_package/</loc>
     <lastmod>2020-06-25T13:21:13+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://raindust.github.io/tags/blockchain/</loc>
-    <lastmod>2020-06-08T20:12:41+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://raindust.github.io/categories/blockchain/</loc>
-    <lastmod>2020-06-08T20:12:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
