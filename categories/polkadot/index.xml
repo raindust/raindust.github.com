@@ -6,11 +6,7 @@
     <description>Recent content in polkadot on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 07 Sep 2020 15:26:20 +0800</lastBuildDate>
-    
-	<atom:link href="http://raindust.github.io/categories/polkadot/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 07 Sep 2020 15:26:20 +0800</lastBuildDate><atom:link href="http://raindust.github.io/categories/polkadot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cumulus基本原理介绍</title>
       <link>http://raindust.github.io/post/2020/cumulus-basic-pricinples/</link>

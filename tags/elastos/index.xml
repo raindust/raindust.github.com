@@ -6,11 +6,7 @@
     <description>Recent content in elastos on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 18 Aug 2019 22:13:08 +0800</lastBuildDate>
-    
-	<atom:link href="http://raindust.github.io/tags/elastos/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 18 Aug 2019 22:13:08 +0800</lastBuildDate><atom:link href="http://raindust.github.io/tags/elastos/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ELA的DPoS收益分配</title>
       <link>http://raindust.github.io/post/2019/elastos-dpos-reward/</link>

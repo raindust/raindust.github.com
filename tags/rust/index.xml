@@ -6,11 +6,7 @@
     <description>Recent content in rust on raindust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Jul 2020 21:40:15 +0800</lastBuildDate>
-    
-	<atom:link href="http://raindust.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 29 Jul 2020 21:40:15 +0800</lastBuildDate><atom:link href="http://raindust.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用cargo remote解放你的Mac电脑</title>
       <link>http://raindust.github.io/post/2020/rust_cargo_remote/</link>

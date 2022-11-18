@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.92.1 with theme even" />
 
 
 <link rel="canonical" href="http://raindust.github.io/post/2020/rust_cargo_remote/" />
@@ -35,7 +35,7 @@
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link href="/sass/main.min.1cb138232adede85ddf62eb331f1e90d1975959a72acf6bd5c73faca36ac7c45.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/reset-even.css">
 
@@ -43,19 +43,15 @@
 <meta property="og:title" content="用cargo remote解放你的Mac电脑" />
 <meta property="og:description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://raindust.github.io/post/2020/rust_cargo_remote/" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/rust_cargo_remote/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-07-29T21:40:15+08:00" />
 <meta property="article:modified_time" content="2020-07-29T21:40:15+08:00" />
+
 <meta itemprop="name" content="用cargo remote解放你的Mac电脑">
-<meta itemprop="description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程">
-<meta itemprop="datePublished" content="2020-07-29T21:40:15+08:00" />
+<meta itemprop="description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程"><meta itemprop="datePublished" content="2020-07-29T21:40:15+08:00" />
 <meta itemprop="dateModified" content="2020-07-29T21:40:15+08:00" />
 <meta itemprop="wordCount" content="1962">
-
-
-
-<meta itemprop="keywords" content="rust," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="rust," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="用cargo remote解放你的Mac电脑"/>
 <meta name="twitter:description" content="rust编译起来比较慢，而且我的MBP 2018的散热不太好跑起来笔记本发烫，于是就想用手头的一台云主机来替我编译。 虽然找到了用Clion远程"/>
 
@@ -153,12 +149,12 @@
 <p>接下来我们需要在<code>~/.cargo/config</code>文件中添加下面的配置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">target</span><span class="p">.</span><span class="nx">x86_64</span><span class="err">-</span><span class="nx">apple</span><span class="err">-</span><span class="nx">darwin</span><span class="p">]</span>
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">target</span><span class="p">.</span><span class="nx">x86_64-apple-darwin</span><span class="p">]</span>
 <span class="nx">linker</span> <span class="p">=</span> <span class="s2">&#34;x86_64-apple-darwin19-clang&#34;</span>
 <span class="nx">ar</span> <span class="p">=</span> <span class="s2">&#34;x86_64-apple-darwin19-ar&#34;</span>
 </code></pre></td></tr></table>
@@ -260,7 +256,7 @@
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2020
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -280,7 +276,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},

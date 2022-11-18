@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.92.1 with theme even" />
 
 
 <link rel="canonical" href="http://raindust.github.io/post/2020/cumulus-start-to-run/" />
@@ -35,7 +35,7 @@
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link href="/sass/main.min.1cb138232adede85ddf62eb331f1e90d1975959a72acf6bd5c73faca36ac7c45.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/reset-even.css">
 
@@ -43,19 +43,15 @@
 <meta property="og:title" content="Cumulus测试环境搭建" />
 <meta property="og:description" content="Cumulus是什么？ 相信了解Polkadot相关技术的人对Substrate一定不陌生，那Cumulus是什么呢？Cumulus与Subs" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://raindust.github.io/post/2020/cumulus-start-to-run/" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/cumulus-start-to-run/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-08-30T21:24:19+08:00" />
 <meta property="article:modified_time" content="2020-08-30T21:24:19+08:00" />
+
 <meta itemprop="name" content="Cumulus测试环境搭建">
-<meta itemprop="description" content="Cumulus是什么？ 相信了解Polkadot相关技术的人对Substrate一定不陌生，那Cumulus是什么呢？Cumulus与Subs">
-<meta itemprop="datePublished" content="2020-08-30T21:24:19+08:00" />
+<meta itemprop="description" content="Cumulus是什么？ 相信了解Polkadot相关技术的人对Substrate一定不陌生，那Cumulus是什么呢？Cumulus与Subs"><meta itemprop="datePublished" content="2020-08-30T21:24:19+08:00" />
 <meta itemprop="dateModified" content="2020-08-30T21:24:19+08:00" />
 <meta itemprop="wordCount" content="4120">
-
-
-
-<meta itemprop="keywords" content="polkadot,blockchain," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="polkadot,blockchain," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cumulus测试环境搭建"/>
 <meta name="twitter:description" content="Cumulus是什么？ 相信了解Polkadot相关技术的人对Substrate一定不陌生，那Cumulus是什么呢？Cumulus与Subs"/>
 
@@ -171,29 +167,29 @@
 <p>首先，我们需要准备rust语言的相关环境，这包括编译器rustc、包管理器cargo、工具链安装工具rustup，除了与平台相关的工具链之外我们还需要安装wasm工具链。如果你对rust还不够熟悉的话，好消息是substrate中有一个安装所有相关依赖的脚本，只要运行如下命令就可以搞定：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">curl https://getsubstrate.io -sSf <span class="p">|</span> bash -s -- --fast
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">curl https://getsubstrate.io -sSf <span class="p">|</span> bash -s -- --fast
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="编译中继链节点">编译中继链节点</h3>
 <p>准备好语言环境后，我们先来编译中继链节点。因为我们是要演示兼容polkadot的跨链网络，这里要编译的节点自然是要用polkadot源码了。首先通过如下命令下载源码：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/paritytech/polkadot.git
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/paritytech/polkadot.git
 </code></pre></td></tr></table>
 </div>
 </div><p>由于polkadot和cumulus是并行开发的，如果直接使用polkadot库master分支的最新源码可能会出现不兼容的情况，因此这里需要切换到固定的commit上：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git checkout fd4b176
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">git checkout fd4b176
 </code></pre></td></tr></table>
 </div>
 </div><p>接下来就是编译了，我们可以通过<code>cargo build</code>来编译debug版本，好处是编译速度快，但是占用磁盘空间大，运行速度较慢（其实不至于影响演示）；也可以通过<code>cargo build --release</code>来编译release版本，好处是占用磁盘空间小，但是编译速度会慢一点。根据情况自己决定即可，注意debug的编译目录为<code>targe/debug</code>，而release的编译目录为<code>target/release</code>。如果编译成功，相应编译目录下会出现名为<code>polkadot</code>的可执行文件。我们后面执行polkadot相关命令时都会事先假设你已经进入到该可执行文件所在的目录，下文不再一一赘述。</p>
@@ -201,19 +197,19 @@
 <p>cumulus的源码地址在<a href="https://github.com/paritytech/cumulus">这里</a>，不过我们这里将使用<a href="https://github.com/substrate-developer-hub/substrate-parachain-template">substrate-parachain-template</a>来做部署演示。<a href="https://github.com/substrate-developer-hub/substrate-parachain-template">substrate-parachain-template</a>和Cumulus之间的关系，与<a href="https://github.com/substrate-developer-hub/substrate-node-template">substrate-node-template</a>和Substrate之间的关系类似，都是为了简化开发而单独抽离出来的模板。我们先通过如下命令克隆代码：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/substrate-developer-hub/substrate-parachain-template.git
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/substrate-developer-hub/substrate-parachain-template.git
 </code></pre></td></tr></table>
 </div>
 </div><p>同样完成克隆后进入到源码目录，为了排除潜在的运行不兼容情况，我们也需要切换到特定commit下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git checkout 2710c42
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">git checkout 2710c42
 </code></pre></td></tr></table>
 </div>
 </div><p>同样的，我们可以通过<code>cargo build</code>或<code>cargo build --release</code>来编译。编译完成后会在相应的目录下会产生<code>parachain-collator</code>可执行文件。</p>
@@ -222,10 +218,10 @@
 <p>如上文所说，我们这里会准备一个最简单的跨链网络，只包含两个中继链（Relay Chain）的节点和一个平行链的验证节点（Validator）。cumulus-workshop中已经有定义好的chain spec，我们这里通过wget下载：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">wget -O spec.json https://substrate.dev/cumulus-workshop/specs/rococo-local.json
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget -O spec.json https://substrate.dev/cumulus-workshop/specs/rococo-local.json
 </code></pre></td></tr></table>
 </div>
 </div><p>我们后面会假设这里下载的<code>spec.json</code>文件已经拷贝到<code>polkadot</code>和<code>parachain-collator</code>可执行文件所在目录，我们后续会在命令行中直接引用它。</p>
@@ -233,10 +229,10 @@
 <p>我们先通过如下命令启动Alice节点：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./polkadot --chain spec.json --tmp --ws-port <span class="m">9944</span> --port <span class="m">30333</span> --alice
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./polkadot --chain spec.json --tmp --ws-port <span class="m">9944</span> --port <span class="m">30333</span> --alice
 </code></pre></td></tr></table>
 </div>
 </div><p>这里大概解释一下命令参数：</p>
@@ -250,21 +246,21 @@
 <p>当启动之后，我们会看到命令行中会有类似如下的输出：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Local node identity is: 12D3KooWGLdqHXgE9ymNVJuHytvTvvicfH5PrvpNUL7FcSpFkSdj
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Local node identity is: 12D3KooWGLdqHXgE9ymNVJuHytvTvvicfH5PrvpNUL7FcSpFkSdj
 </code></pre></td></tr></table>
 </div>
 </div><p>这里的<code>12D3KooWGLdqHXgE9ymNVJuHytvTvvicfH5PrvpNUL7FcSpFkSdj</code>是我们刚才启动节点的peer id，我们知道substrate底层采用libp2p做节点间点对点通讯，这里的peer概念实际上出自libp2p，表示p2p网络中的一个节点。我们后面会结合peer id以及之前启动参数中指定的p2p端口参数来链接到刚才启动的节点（我们后面简称为alice节点）</p>
 <p>如果只运行alice节点，我们会发现链的高度始终为0，这是因为我们在chain spec中已经指定了需要两个节点共同验证才能出块。接下来我们就启动中继链中的第二个节点，这个节点使用了链中预定义的bob账户，因此我们后面也可以简称为bob节点。启动的命令如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./polkadot --chain spec.json --tmp --ws-port <span class="m">9955</span> --port <span class="m">30334</span> --bob --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWGLdqHXgE9ymNVJuHytvTvvicfH5PrvpNUL7FcSpFkSd
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./polkadot --chain spec.json --tmp --ws-port <span class="m">9955</span> --port <span class="m">30334</span> --bob --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWGLdqHXgE9ymNVJuHytvTvvicfH5PrvpNUL7FcSpFkSd
 j
 </code></pre></td></tr></table>
 </div>
@@ -274,21 +270,21 @@ j
 <p>首先，我们进去到平行链编译后可执行文件所在模流，通过如下命令生成一个Wasm的验证函数：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./parachain-collator export-genesis-wasm &gt; para-200-wasm
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./parachain-collator export-genesis-wasm &gt; para-200-wasm
 </code></pre></td></tr></table>
 </div>
 </div><p>当生成成功后，同级目录下会生成一个para-200-wasm文件，这个文件当我们后续在中继链上注册该平行侧链时会用到。</p>
 <p>然后我们通过如下命令启动平行链节点：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./parachain-collator --tmp --ws-port <span class="m">9977</span> --port <span class="m">30336</span> --parachain-id <span class="m">200</span> --validator -- <span class="se">\ </span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./parachain-collator --tmp --ws-port <span class="m">9977</span> --port <span class="m">30336</span> --parachain-id <span class="m">200</span> --validator -- <span class="se">\ </span>
  --chain spec.json --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWGLdqHXgE9ymNVJuHytvTvvicfH5PrvpNUL7FcSpFkSd
 </code></pre></td></tr></table>
 </div>
@@ -301,10 +297,10 @@ j
 <p>此外，在日志中我们会看到如下日志：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">Parachain genesis state: 0x00000000000000000000000000000000000000000000000000000000000000000097600fcfeeed0c7c2e7d922081a466c4c00f2af96ce17f4a07d59e7d47e8354b03170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131400
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">Parachain genesis state: 0x00000000000000000000000000000000000000000000000000000000000000000097600fcfeeed0c7c2e7d922081a466c4c00f2af96ce17f4a07d59e7d47e8354b03170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131400
 </code></pre></td></tr></table>
 </div>
 </div><p>这里的<code>genesis state</code>值我们也需要先存下来，后续在注册侧链时会有用到。</p>
@@ -417,7 +413,7 @@ j
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2020
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -437,7 +433,7 @@ j
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.92.1 with theme even" />
 
 
 <link rel="canonical" href="http://raindust.github.io/post/2020/xchain-contract-deployment-tutorial/" />
@@ -35,7 +35,7 @@
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link href="/sass/main.min.1cb138232adede85ddf62eb331f1e90d1975959a72acf6bd5c73faca36ac7c45.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/reset-even.css">
 
@@ -43,19 +43,15 @@
 <meta property="og:title" content="XuperChain从节点部署到合约调用完整向导" />
 <meta property="og:description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://raindust.github.io/post/2020/xchain-contract-deployment-tutorial/" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/xchain-contract-deployment-tutorial/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-06-08T20:12:41+08:00" />
 <meta property="article:modified_time" content="2020-06-08T20:12:41+08:00" />
+
 <meta itemprop="name" content="XuperChain从节点部署到合约调用完整向导">
-<meta itemprop="description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh">
-<meta itemprop="datePublished" content="2020-06-08T20:12:41+08:00" />
+<meta itemprop="description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh"><meta itemprop="datePublished" content="2020-06-08T20:12:41+08:00" />
 <meta itemprop="dateModified" content="2020-06-08T20:12:41+08:00" />
 <meta itemprop="wordCount" content="1309">
-
-
-
-<meta itemprop="keywords" content="blockchain,xuper," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="blockchain,xuper," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="XuperChain从节点部署到合约调用完整向导"/>
 <meta name="twitter:description" content="XuperChain官网分别提供了节点部署、创建合约账户、调用合约等操作向导，但没有形成统一的文档进行串联，为了让大家快速入门XuperCh"/>
 
@@ -161,10 +157,10 @@
 <p>初始化链上配置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli createChain
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli createChain
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -172,10 +168,10 @@
 <p>启动链</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">nohup ./xchain <span class="p">&amp;</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">nohup ./xchain <span class="p">&amp;</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -183,10 +179,10 @@
 <p>成功启动后可以通过以下命令查看链上状态：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli status
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli status
 </code></pre></td></tr></table>
 </div>
 </div><p>可在json类型的返回值中找到键为<code>height</code>，其值为当前链高</p>
@@ -198,10 +194,10 @@
 <p>调用cli命令创建一个合约账户：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli account new --account <span class="m">1111111111111111</span> --fee <span class="m">1000</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli account new --account <span class="m">1111111111111111</span> --fee <span class="m">1000</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>这里指定账户名为<code>1111111111111111</code>，创建成功后相应的合约地址为<code>XC1111111111111111@xuper</code>，其中<code>xuper</code>为默认启动链时默认分配的链名称</p>
@@ -210,10 +206,10 @@
 <p>通过如下命令查询并验证新生成的合约账户ACL相关信息：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">xchain-cli acl query --account XC1111111111111111@xuper
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">xchain-cli acl query --account XC1111111111111111@xuper
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -222,19 +218,19 @@
 <p>首先在<code>data</code>目录下创建子目录<code>acl</code>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">mkdir data/acl
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">mkdir data/acl
 </code></pre></td></tr></table>
 </div>
 </div><p>调用如下命令生成地址列表文件：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="s2">&#34;XC1111111111111111@xuper/dpzuVdosQrF2kmzumhVeFQZa1aYcdgFpN&#34;</span> &gt; data/acl/addrs
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="s2">&#34;XC1111111111111111@xuper/dpzuVdosQrF2kmzumhVeFQZa1aYcdgFpN&#34;</span> &gt; data/acl/addrs
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -242,10 +238,10 @@
 <p>向新生成的合约账户中转账</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli transfer --to XC1111111111111111@xuper --amount <span class="m">100000000</span> --keys data/keys/
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli transfer --to XC1111111111111111@xuper --amount <span class="m">100000000</span> --keys data/keys/
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -253,10 +249,10 @@
 <p>成功转账后可以查询合约账户中的余额</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">./xchain-cli account balance XC1111111111111111@xuper
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">./xchain-cli account balance XC1111111111111111@xuper
 </code></pre></td></tr></table>
 </div>
 </div><p>这里会返回余额和步骤2中指定的<code>amount</code>相同</p>
@@ -268,10 +264,10 @@
 <p>进入到合约代码所在位置，运行如下命令对go语言源码进行wasm合约编译：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GOOS</span><span class="o">=</span>js <span class="nv">GOARCH</span><span class="o">=</span>wasm go build counter.go
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GOOS</span><span class="o">=</span>js <span class="nv">GOARCH</span><span class="o">=</span>wasm go build counter.go
 </code></pre></td></tr></table>
 </div>
 </div><p>如果编译成功会生成一个名为counter的可执行文件</p>
@@ -280,10 +276,10 @@
 <p>将可执行拷贝到xchain程序目录下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">cp counter <span class="o">[</span>your path<span class="o">]</span>/data/blockchain/xuper/wasm/
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">cp counter <span class="o">[</span>your path<span class="o">]</span>/data/blockchain/xuper/wasm/
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -294,23 +290,23 @@
 <p>通过如下命令进行试生成合约原始交易</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm deploy --account XC1111111111111111@xuper --cname counter -m -a <span class="s1">&#39;{&#34;creator&#34;: &#34;xchain&#34;}&#39;</span> -A data/acl/addrs -o tx.output
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm deploy --account XC1111111111111111@xuper --cname counter -m -a <span class="s1">&#39;{&#34;creator&#34;: &#34;xchain&#34;}&#39;</span> -A data/acl/addrs -o tx.output
  --keys data/keys --name xuper --runtime go data/blockchain/xuper/wasm/counter
 </code></pre></td></tr></table>
 </div>
 </div><p>如果试生成成功会返回如下响应消息：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">contract response:
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">contract response:
 The gas you cousume is: <span class="m">5182110</span>
 You need add fee
 </code></pre></td></tr></table>
@@ -320,11 +316,11 @@ You need add fee
 <p>添加步骤1中的返回fee值后重复步骤1中的命令：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm deploy --account XC1111111111111111@xuper --cname counter -m -a <span class="s1">&#39;{&#34;creator&#34;: &#34;xchain&#34;}&#39;</span> -A data/acl/addrs -o tx.output
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm deploy --account XC1111111111111111@xuper --cname counter -m -a <span class="s1">&#39;{&#34;creator&#34;: &#34;xchain&#34;}&#39;</span> -A data/acl/addrs -o tx.output
  --keys data/keys --name xuper --runtime go data/blockchain/xuper/wasm/counter --fee <span class="m">5182110</span>
 </code></pre></td></tr></table>
 </div>
@@ -334,10 +330,10 @@ You need add fee
 <p>对步骤2中生成的原始交易签名</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig sign --tx tx.output --output sign.out --keys data/keys/
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig sign --tx tx.output --output sign.out --keys data/keys/
 </code></pre></td></tr></table>
 </div>
 </div><p>签名成功后在相同目录下生成对原始交易的签名文件<code>sign.out</code></p>
@@ -346,10 +342,10 @@ You need add fee
 <p>将原始交易及签名发送到链上</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig send --tx tx.output sign.out sign.out
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig send --tx tx.output sign.out sign.out
 </code></pre></td></tr></table>
 </div>
 </div><p>发送成功后会返回交易的Hash值</p>
@@ -358,10 +354,10 @@ You need add fee
 <p>查询合约账户验证部署结果</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli account contracts --account XC1111111111111111@xuper
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli account contracts --account XC1111111111111111@xuper
 </code></pre></td></tr></table>
 </div>
 </div><p>返回结果中包含刚才生成原始交易时指定的合约名则说明部署成功</p>
@@ -373,21 +369,21 @@ You need add fee
 <p>通过如下命令试生成合约调用的原始交易</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out
 </code></pre></td></tr></table>
 </div>
 </div><p>如果试生成成功，则会返回如下响应消息：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">contract response: 1
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">contract response: 1
 The gas you cousume is: 100662
 You need add fee
 </code></pre></td></tr></table>
@@ -397,10 +393,10 @@ You need add fee
 <p>添加步骤1中的返回fee值后重复步骤1中的命令：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out --fee <span class="m">100662</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out --fee <span class="m">100662</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>若生成成功则会在相同目录下生成名为<code>increase.out</code>的文件</p>
@@ -409,10 +405,10 @@ You need add fee
 <p>对步骤2中生成的原始交易签名</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig sign --tx increase.out --output increase.sign --keys data/keys/
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig sign --tx increase.out --output increase.sign --keys data/keys/
 </code></pre></td></tr></table>
 </div>
 </div><p>签名成功后在相同目录下生成对原始交易的签名文件<code>increase.sign</code></p>
@@ -421,10 +417,10 @@ You need add fee
 <p>将原始交易及签名发送到链上</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig send --tx increase.out increase.sign increase.sign
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli multisig send --tx increase.out increase.sign increase.sign
 </code></pre></td></tr></table>
 </div>
 </div><p>发送成功后会返回交易的Hash值</p>
@@ -433,21 +429,21 @@ You need add fee
 <p>测试调用合约结果</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./xchain-cli wasm invoke counter -a <span class="s1">&#39;{&#34;key&#34;:&#34;counter&#34;}&#39;</span> --method increase -m --output increase.out
 </code></pre></td></tr></table>
 </div>
 </div><p>如上述命令所示，我们可以再次调用increase方法，通过合约试运行中返回结果查看存储于链上key为<code>counter</code>对应的值变化情况。由于我们已经成功新增过一次计数，这里的返回值应该是<code>2</code>，以下为测试中返回的结果：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">contract response: <span class="m">2</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">contract response: <span class="m">2</span>
 The gas you cousume is: <span class="m">100834</span>
 You need add fee
 </code></pre></td></tr></table>
@@ -554,7 +550,7 @@ You need add fee
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2020
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -574,7 +570,7 @@ You need add fee
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},

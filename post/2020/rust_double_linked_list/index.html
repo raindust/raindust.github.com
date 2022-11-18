@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.92.1 with theme even" />
 
 
 <link rel="canonical" href="http://raindust.github.io/post/2020/rust_double_linked_list/" />
@@ -35,7 +35,7 @@
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link href="/sass/main.min.e23b16f70676ed692f169c65f07230cd9d3e790a4b5b15dc32b1ee36e7604994.css" rel="stylesheet">
+<link href="/sass/main.min.1cb138232adede85ddf62eb331f1e90d1975959a72acf6bd5c73faca36ac7c45.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/reset-even.css">
 
@@ -43,19 +43,15 @@
 <meta property="og:title" content="Rust双向链表分析之旅" />
 <meta property="og:description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://raindust.github.io/post/2020/rust_double_linked_list/" />
+<meta property="og:url" content="http://raindust.github.io/post/2020/rust_double_linked_list/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-07-11T15:09:28+08:00" />
 <meta property="article:modified_time" content="2020-07-11T15:09:28+08:00" />
+
 <meta itemprop="name" content="Rust双向链表分析之旅">
-<meta itemprop="description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;">
-<meta itemprop="datePublished" content="2020-07-11T15:09:28+08:00" />
+<meta itemprop="description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;"><meta itemprop="datePublished" content="2020-07-11T15:09:28+08:00" />
 <meta itemprop="dateModified" content="2020-07-11T15:09:28+08:00" />
-<meta itemprop="wordCount" content="8318">
-
-
-
-<meta itemprop="keywords" content="rust," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="wordCount" content="8319">
+<meta itemprop="keywords" content="rust," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Rust双向链表分析之旅"/>
 <meta name="twitter:description" content="对rust初学者而言，写算法是很痛苦的事情。一个双向链表就能折磨得人死去活来，不少老外都在抱怨”Why writing a linked list in safe Rust is so damned hard &hellip;"/>
 
@@ -127,7 +123,7 @@
         <div class="post-category">
             <a href="/categories/rust/"> rust </a>
             </div>
-          <span class="more-meta"> 8318 words </span>
+          <span class="more-meta"> 8319 words </span>
           <span class="more-meta"> 17 mins read </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
       </div>
@@ -154,14 +150,14 @@
 <p>那么写一个rust style的节点定义需要如何写呢？我们可能第一反应是用<code>Box</code>，如果按直觉写下来可能是这样的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
 </span><span class="w">  </span><span class="n">prev</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
 </span><span class="w">  </span><span class="n">next</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w">
@@ -173,7 +169,7 @@
 <p>顺着这个思路我们会想到<code>Rc</code>（类似于C++中的shared_ptr），接下来我们就用Rc来改造一下节点的定义：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -182,7 +178,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
@@ -197,7 +193,7 @@
 <p>我们知道类似于Rc这种智能指针是通过引用计数来实现的，每当增加一个Rc的引用，引用计数就会加1，当引用计数减为0时会自动释放其指向的内存。循环引用的情况引用计数会至少维持引用计数为1，因此总没有机会自动释放。而弱引用指针不同的是，它并不会增加引用计数（或者是不会增加<strong>强引用</strong>计数，即二者的引用计数系统时分开的）。我们接下来就借助rust标准库中的弱引用指针——Weak来改造节点的数据结构如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -206,7 +202,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
@@ -219,7 +215,7 @@
 <p>在我们看看刚才的定义，实际上是没有表达为空的能力的。因此，我们需要为prev和next字段加上Option。那么问题来了，我们需要在哪一层加上Option呢，最外层？Node？还是类型T呢？我们定义prev和next字段是为了对应一个节点的引用，因此在Node这里或者最外层会比较合理。另外，我们希望的是可以简单置空的效果，比如<code>node.prev = None;</code>这样，所以最外层比较合适。所以加上Option之后会变成这样：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -228,7 +224,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">data</span>: <span class="nc">T</span><span class="p">,</span><span class="w">
@@ -240,7 +236,7 @@
 </div><p>这样已经很接近了，我们来做一个小的测试吧：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -255,7 +251,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">data</span>: <span class="mi">1</span><span class="p">,</span><span class="w">
 </span><span class="w">  </span><span class="n">prev</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
 </span><span class="w">  </span><span class="n">next</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
@@ -270,17 +266,17 @@
 </span><span class="w"></span><span class="n">a</span><span class="p">.</span><span class="n">next</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">None</span><span class="p">;</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>上面代码我们构建了两个节点a和b，我们先让b成a的后继节点：<code>a.next = Some(Rc::new(b));</code>，这一步还挺顺利，但是下一步我们让a后继的后继节点变为空时会报&quot;cannot assign to data in an <code>Rc</code>&quot;这样的错误。我们可以先把<code>as_ref().unwrap()</code>这些东东忽略，简单理解最后一行就是<code>a.next.next = None</code>这样。类似于后继的后继赋值这种操作在双向链表中还是挺常见的，我们还是回过头分析一下为什么会报错吧。</p>
+</div><p>上面代码我们构建了两个节点a和b，我们先让b成a的后继节点：<code>a.next = Some(Rc::new(b));</code>，这一步还挺顺利，但是下一步我们让a后继的后继节点变为空时会报&quot;cannot assign to data in an <code>Rc</code>&ldquo;这样的错误。我们可以先把<code>as_ref().unwrap()</code>这些东东忽略，简单理解最后一行就是<code>a.next.next = None</code>这样。类似于后继的后继赋值这种操作在双向链表中还是挺常见的，我们还是回过头分析一下为什么会报错吧。</p>
 <p>回忆我们刚开始学习rust时，会比较在意rust语言中默认变量是不可变的，因此我们需要显式在声明时加上<code>mut</code>关键字让该变量可变。而我们在定义节点前驱和后继节点时并没有指明其内部引用的节点是可变的，因此当我们尝试更改改节点应用的时候就会报错。我们再来看一个很简单的例子验证一下刚才的推断：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="nc">Rc</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">
 </span><span class="w"></span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
@@ -289,14 +285,14 @@
 </div><p>可以看到我们申明了一个类型为<code>Rc&lt;i32&gt;</code>的变量，然后尝试更改a的值，编译器报了同样的错误。这时我们最容易想到的改进方法是在Rc声明内部类型时指定可变性，将<code>Rc&lt;i32&gt;</code>改为<code>Rc&lt;&amp;mut i32&gt;</code>，然后试着更改成如下形式：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">b</span>: <span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
 </span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="nc">Rc</span><span class="o">&lt;&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
@@ -306,14 +302,14 @@
 </div><p>编译发现还是报了同样的错误。这条路看来是走不通了，我们试着将跳出目前的困境看看智能指针相关的类型还有什么，这时就会发现两个其他语言中找不到的类型：<code>Cell</code>和<code>RefCell</code>。看两者的说明都是用来改变内部可变性的，这正是我们想要的！接下来我们先使用<code>Cell</code>尝试让上面的例子编译通过吧：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="n">Rc</span><span class="p">;</span><span class="w">
 </span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cell</span>::<span class="n">Cell</span><span class="p">;</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="nc">Rc</span><span class="o">&lt;</span><span class="n">Cell</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="n">Cell</span>::<span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w">
@@ -324,7 +320,7 @@
 <p>回过头来看看<code>Cell</code>和<code>RefCell</code>的区别：通过阅读文档我们发现<code>Cell</code>用于实现了<code>Copy trait</code>的类型（可以简单理解为值类型），而其他类型则使用<code>RefCell</code>。我们的Node结构体不打算实现<code>Copy trait</code>，所以我们通过<code>RefCell</code>修改节点的定义如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -334,7 +330,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">rc</span>::<span class="p">{</span><span class="n">Rc</span><span class="p">,</span><span class="w"> </span><span class="n">Weak</span><span class="p">};</span><span class="w">
 </span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cell</span>::<span class="n">RefCell</span><span class="p">;</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">struct</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -357,13 +353,13 @@
 <p>这样分析下来，头指针和尾指针和Node中的next成员很像，参照next的定义我们实现如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">first</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
 </span><span class="w">  </span><span class="n">last</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;&gt;</span><span class="p">,</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
@@ -376,7 +372,7 @@
 <p>按照rust单元测试惯例，我们在实现上面逻辑的文件底部添加单元测试的定义：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -387,7 +383,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[cfg(test)]</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[cfg(test)]</span><span class="w">
 </span><span class="w"></span><span class="k">mod</span> <span class="nn">tests</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="p">{</span><span class="n">List</span><span class="p">};</span><span class="w">
 </span><span class="w">    
@@ -401,13 +397,13 @@
 </div><p>接下来我在<code>test_list_append</code>方法中添加测试逻辑。按照上面的分析我们需要先创建一个链表，我们当然可以直接地这样创建：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">first</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
 </span><span class="w">  </span><span class="n">last</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
 </span><span class="w"></span><span class="p">};</span><span class="w">
@@ -422,19 +418,19 @@
 <p>所以我们决定我们需要为我们的List添加一个名为<code>new</code>的构造方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">l</span>: <span class="nc">List</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">l</span>: <span class="nc">List</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span>::<span class="n">new</span><span class="p">();</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>注意这我们为变量<code>l</code>的后面显式地指定了类型<code>List&lt;i32&gt;</code>，这是因为我们的链表是泛型的，而这里没法自动推导出类型所以就直接告诉编译器“我想要生成这个结果”。这句话还有另一种实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span>::<span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span>::<span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span>::<span class="n">new</span><span class="p">();</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>这里是就相当于告诉编译器“我知道节点的类型是什么”。也许有人觉得<code>List::&lt;i32&gt;::new()</code>这种表达方式很奇怪，其实这和<code>&lt;List&lt;i32&gt;&gt;::new()</code>是等价的（熟悉C++的同学对这种表达方式一定不陌生），是rust中一种减少泛型<code>&lt;&gt;</code>嵌套的表达方式。</p>
@@ -442,12 +438,12 @@
 <p>接下来我们为我们的链表中添加几个元素：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="p">..</span><span class="mi">6</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">..</span><span class="mi">6</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
@@ -455,17 +451,17 @@
 </div><p>我们依次给链表中添加了1~5几个数字，接下来我们就验证一下添加后的结果是否正确。为此我们需要申明一个指针的引用：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>我们看到这里我们定义了一个<code>cur</code>的变量，它最开始指向链表的头指针的位置。那这里为什么需要<code>clone</code>呢？<code>clone</code>的过程到底做了什么呢？</p>
 <p>我们先看看后一个问题吧。<code>clone</code>方法实际上是对<code>Clone</code> trait的实现。我们知道这里的first类型是<code>Option&lt;Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;&gt;</code>，因此这里调用<code>clone</code>会首先调用Option的<code>clone</code>方法，我们看看Option中<code>clone</code>方法的实现吧：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -474,7 +470,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[inline]</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[inline]</span><span class="w">
 </span><span class="w"></span><span class="k">fn</span> <span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="nb">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">clone</span><span class="p">()),</span><span class="w">
@@ -486,17 +482,17 @@
 </div><p>我们看到这里实际上只是调用Option内部类型的clone方法，由于这里的内部类型是<code>Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，因此我们在往下看下Rc中的<code>clone</code>方法实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[inline]</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[inline]</span><span class="w">
 </span><span class="w"></span><span class="k">fn</span> <span class="nf">clone</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Rc</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">inc_strong</span><span class="p">();</span><span class="w">
-</span><span class="w">  </span><span class="n">Self</span>::<span class="n">from_inner</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">ptr</span><span class="p">)</span><span class="w">
+</span><span class="w">  </span><span class="bp">Self</span>::<span class="n">from_inner</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">ptr</span><span class="p">)</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
@@ -505,13 +501,13 @@
 <p>那么如何定义拷贝操作呢？找到<code>Copy</code>的定义，我们会发现它实际上是继承了<code>Clone</code> trait：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[lang = </span><span class="s">&#34;copy&#34;</span><span class="cp">]</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="cp">#[lang = </span><span class="s">&#34;copy&#34;</span><span class="cp">]</span><span class="w">
 </span><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Copy</span>: <span class="nb">Clone</span> <span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="c1">// Empty.
 </span><span class="c1"></span><span class="p">}</span><span class="w">
@@ -521,7 +517,7 @@
 <p>好了，接下来我们通过循环来依次比对值。我将剩下的整个逻辑都贴出来吧：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -530,9 +526,9 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">cur_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">cur_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
 </span><span class="w"></span><span class="k">while</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">  </span><span class="n">assert_eq</span><span class="o">!</span><span class="p">(</span><span class="n">cur_value</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">borrow</span><span class="p">().</span><span class="n">data</span><span class="p">);</span><span class="w">
+</span><span class="w">  </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">cur_value</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">borrow</span><span class="p">().</span><span class="n">data</span><span class="p">);</span><span class="w">
 </span><span class="w">
 </span><span class="w">  </span><span class="n">cur_value</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
 </span><span class="w">  </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">borrow</span><span class="p">().</span><span class="n">next</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w">
@@ -543,14 +539,14 @@
 <p>我们通过<code>let Some</code>表达式来定义node变量，他的类型则是<code>Rc&lt;RefCell&lt;Node&lt;T&gt;&gt;&gt;</code>，所以这里的<code>as_ref</code>是对Rc的操作，我们再看看Rc关于<code>as_ref</code>的实现：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span>: <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">AsRef</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span>: <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">AsRef</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="k">fn</span> <span class="nf">as_ref</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">T</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="o">&amp;**</span><span class="bp">self</span><span class="w">
 </span><span class="w">  </span><span class="p">}</span><span class="w">
@@ -561,12 +557,12 @@
 <p>接下来的再看看<code>borrow</code>方法吧，borrow方法在RefCell中实现，rust中的定义如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">borrow</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Ref</span><span class="o">&lt;</span><span class="na">&#39;_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">borrow</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Ref</span><span class="o">&lt;&#39;</span><span class="nb">_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">try_borrow</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;already mutably borrowed&#34;</span><span class="p">)</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
@@ -577,7 +573,7 @@
 <p>我们通过<code>Ref</code>这个类型来发现线索吧，找到<code>Ref</code>的定义我们会看到它实现了<code>Deref</code> trait：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -587,7 +583,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span>: <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Deref</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Ref</span><span class="o">&lt;</span><span class="na">&#39;_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span>: <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Deref</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Ref</span><span class="o">&lt;&#39;</span><span class="nb">_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="k">type</span> <span class="nc">Target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">;</span><span class="w">
 </span><span class="w">  
 </span><span class="w">  </span><span class="cp">#[inline]</span><span class="w">
@@ -602,7 +598,7 @@
 <p>虽然我们还没有实现具体的逻辑，不过人性化的rust也帮我们准备了<code>cargo test --no-run</code>这样的只保障编译通过的测试方式。不过遗憾的是即便如此也会报错，因为我们还没有定义测试中用到的方法。事不宜迟我们立马补上：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -616,7 +612,7 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="n">List</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">      </span><span class="n">first</span>: <span class="nb">None</span><span class="p">,</span><span class="w">
@@ -635,7 +631,7 @@
 <p>这里我们还是参考<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2015">playground</a>的实现在Node中添加一个构造方法和一个append方法，这里的append会递归查找自己的后继节点，直到找到最后一个节点。整个逻辑比较简单我们就直接贴出来吧：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -659,7 +655,7 @@
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">data</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">      </span><span class="n">data</span><span class="p">,</span><span class="w">
@@ -671,12 +667,12 @@
 </span><span class="w">  </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">append</span><span class="p">(</span><span class="n">node</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Rc</span><span class="o">&lt;</span><span class="n">RefCell</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">data</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">is_last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">borrow_mut</span><span class="p">().</span><span class="n">next</span><span class="p">.</span><span class="n">is_none</span><span class="p">();</span><span class="w">
 </span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">is_last</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">new_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Self</span>::<span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">);</span><span class="w">
+</span><span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">new_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">Self</span>::<span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">);</span><span class="w">
 </span><span class="w">      </span><span class="n">new_node</span><span class="p">.</span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">Rc</span>::<span class="n">downgrade</span><span class="p">(</span><span class="n">node</span><span class="p">));</span><span class="w">
 </span><span class="w">      </span><span class="n">node</span><span class="p">.</span><span class="n">borrow_mut</span><span class="p">().</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">Rc</span>::<span class="n">new</span><span class="p">(</span><span class="n">RefCell</span>::<span class="n">new</span><span class="p">(</span><span class="n">new_node</span><span class="p">)));</span><span class="w">
 </span><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">borrow_mut</span><span class="p">().</span><span class="n">next</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="n">Self</span>::<span class="n">append</span><span class="p">(</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w">
+</span><span class="w">        </span><span class="bp">Self</span>::<span class="n">append</span><span class="p">(</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w">
 </span><span class="w">      </span><span class="p">}</span><span class="w">
 </span><span class="w">    </span><span class="p">}</span><span class="w">
 </span><span class="w">  </span><span class="p">}</span><span class="w">
@@ -690,12 +686,12 @@
 <p>我们会发现代码中多处用到了<code>borrow_mut</code>方法，它和我们前面说明的<code>borrow</code>类似，用来返回内部类型的可变引用，具体实现是这样的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">borrow_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">RefMut</span><span class="o">&lt;</span><span class="na">&#39;_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">borrow_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">RefMut</span><span class="o">&lt;&#39;</span><span class="nb">_</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="bp">self</span><span class="p">.</span><span class="n">try_borrow_mut</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;already borrowed&#34;</span><span class="p">)</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
@@ -709,11 +705,11 @@
 <p>这个时候我们需要借助一个关键：<code>ref</code>。它和<code>&amp;</code>在很多时候可以等价使用的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
 </span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
@@ -726,7 +722,7 @@
 <p>好了，我们贴上代码吧：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -738,7 +734,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">  </span><span class="n">Node</span>::<span class="n">append</span><span class="p">(</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w">
 </span><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">borrow</span><span class="p">().</span><span class="n">next</span><span class="w">
 </span><span class="w">    </span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">().</span><span class="n">clone</span><span class="p">();</span><span class="w">
@@ -852,7 +848,7 @@
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2020
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -872,7 +868,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},

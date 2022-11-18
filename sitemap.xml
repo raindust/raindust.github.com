@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://raindust.github.io/categories/</loc>
+    <lastmod>2022-11-18T15:20:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/tags/essay/</loc>
+    <lastmod>2022-11-18T15:20:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/categories/essay/</loc>
+    <lastmod>2022-11-18T15:20:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/post/</loc>
+    <lastmod>2022-11-18T15:20:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/</loc>
+    <lastmod>2022-11-18T15:20:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/tags/</loc>
+    <lastmod>2022-11-18T15:20:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://raindust.github.io/post/2022/%E5%9C%A8%E5%93%AA%E9%87%8C%E5%86%99%E6%96%87%E7%AB%A0/</loc>
+    <lastmod>2022-11-18T15:20:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://raindust.github.io/tags/blockchain/</loc>
     <lastmod>2020-09-07T15:26:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -10,13 +59,6 @@
   
   <url>
     <loc>http://raindust.github.io/categories/blockchain/</loc>
-    <lastmod>2020-09-07T15:26:20+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://raindust.github.io/categories/</loc>
     <lastmod>2020-09-07T15:26:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -38,27 +80,6 @@
   
   <url>
     <loc>http://raindust.github.io/categories/polkadot/</loc>
-    <lastmod>2020-09-07T15:26:20+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://raindust.github.io/post/</loc>
-    <lastmod>2020-09-07T15:26:20+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://raindust.github.io/</loc>
-    <lastmod>2020-09-07T15:26:20+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://raindust.github.io/tags/</loc>
     <lastmod>2020-09-07T15:26:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
